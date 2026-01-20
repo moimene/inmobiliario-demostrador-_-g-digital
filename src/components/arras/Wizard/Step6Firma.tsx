@@ -186,7 +186,6 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
       }, 1500);
     }
   };
-  };
 
   const todosHanFirmado = firmantes.every(f => f.estado === "firmado");
   const algunoHaFirmado = firmantes.some(f => f.estado === "firmado");
@@ -506,8 +505,8 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
                       Descargar Certificado
                     </Button>
                   </div>
-                  </CardContent>
-                </Card>
+                </CardContent>
+              </Card>
               </motion.div>
             )}
           </AnimatePresence>
