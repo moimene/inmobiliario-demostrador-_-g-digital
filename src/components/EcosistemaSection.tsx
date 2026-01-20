@@ -9,25 +9,6 @@ export const EcosistemaSection = () => {
 
   const productosEcosistema = [
     {
-      name: "AutoServTech",
-      sector: "Sector Automoción",
-      icon: Car,
-      url: "https://certificados-entrega.lovable.app",
-      description: "Certificación digital de entregas de vehículos con captura multimedia certificada, firmas electrónicas avanzadas y sellos de tiempo cualificado eIDAS. Documentación completa del estado del vehículo con validez legal plena para prevenir disputas post-entrega entre concesionarios, compradores y entidades financieras.",
-      features: [
-        "Actas de Entrega Certificadas",
-        "Evidencia Multimedia",
-        "Firmas Electrónicas",
-        "Sellos de Tiempo eIDAS"
-      ],
-      color: "accent",
-      borderHover: "hover:border-accent",
-      bgButton: "bg-accent hover:bg-accent/90",
-      bgIcon: "bg-accent/10 group-hover:bg-accent/20",
-      textIcon: "text-accent",
-      badge: "🚧 En Desarrollo"
-    },
-    {
       name: "GoCertius",
       sector: "Herramienta Universal",
       icon: Shield,
