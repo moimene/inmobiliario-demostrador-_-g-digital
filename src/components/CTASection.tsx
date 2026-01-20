@@ -13,7 +13,7 @@ export const CTASection = () => {
             Contacta con nosotros para conocer más sobre nuestras soluciones certificadas
           </p>
           <div className="flex justify-center items-center">
-            <Button 
+            <Button
               size="lg"
               variant="outline"
               className="bg-white/10 hover:bg-white/30 border-white/50 hover:border-white border-3 text-white font-bold px-10 py-7 text-xl backdrop-blur-sm shadow-2xl hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
@@ -25,7 +25,7 @@ export const CTASection = () => {
 
           <div className="mt-12 pt-8 border-t border-white/20">
             <p className="text-sm opacity-75 max-w-2xl mx-auto">
-              Facilitea Casa es una plataforma tecnológica que integra servicios de confianza cualificados según el reglamento eIDAS. 
+              InmoServTech es una plataforma tecnológica que integra servicios de confianza cualificados según el reglamento eIDAS.
               No sustituye el asesoramiento legal personalizado, sino que proporciona herramientas certificadas
               para mejorar la seguridad jurídica de tus transacciones inmobiliarias.
             </p>

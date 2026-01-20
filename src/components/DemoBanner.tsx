@@ -5,7 +5,7 @@ export const DemoBanner = () => {
         <p className="text-center text-sm md:text-base text-primary-foreground font-medium">
           📋 <strong>Presentación-Demostración</strong> preparada por{" "}
           <span className="font-bold">g-digital</span> para{" "}
-          <span className="font-bold">Facilitea</span>
+          <span className="font-bold">InmoServTech</span>
           {" "}· Entorno de simulación con datos ficticios
         </p>
       </div>

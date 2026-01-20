@@ -1,148 +1,119 @@
-export type FaseArras = 
-  | "apertura_expediente_arras"
-  | "identificacion_partes_arras"
-  | "identificacion_inmueble_arras"
-  | "due_diligence_basica"
-  | "configuracion_deposito_arras"
-  | "generacion_y_firma_contrato_arras"
-  | "canal_certificado_pre_escritura"
-  | "gestion_eventos_pre_notaria"
-  | "convocatoria_y_comparecencia_notarial"
-  | "resultado_formalizacion"
-  | "resolucion_arras"
-  | "arbitraje_y_cierre";
+// Chrono-Flare State Machine Types for Arras
+// 11-State Standard
 
-export interface ParteArras {
-  nombre: string;
-  nif: string;
-  telefono: string;
-  email: string;
-  direccion?: string;
-  tipo: "vendedor" | "comprador" | "notaria" | "escrow";
-  iban?: string;
-  profesion?: string;
-  empresa?: string;
-}
+export type ArrasFase =
+  | "apertura"                // 1. Inicio
+  | "kyc_partes"              // 2. Identificación
+  | "inmueble_dd"             // 3. Inmueble + Due Diligence básica
+  | "borrador_contrato"       // 4. Negociación/Configuración
+  | "firma_digital"           // 5. Firma del contrato
+  | "custodia_fondos"         // 6. Depósito/Escrow
+  | "cumplimiento_condiciones"// 7. Periodo de vigencia (Pre-Escritura)
+  | "preparacion_notarial"    // 8. Convocatoria
+  | "formalizacion_escritura" // 9. Firma ante notario
+  | "liquidacion_impuestos"   // 10. Post-firma / Plusvalía
+  | "cierre_expediente";      // 11. Archivo certificadodu
 
-export interface InmuebleArras {
-  direccion: string;
-  tipo: string;
-  superficie: number;
-  habitaciones: number;
-  banos: number;
-  caracteristicas: Record<string, any>;
-  datosRegistrales?: {
-    fincaRegistral: string;
-    tomo: string;
-    libro: string;
-    folio: string;
-    registroPropiedad: string;
-  };
-  notaRegistral?: {
-    fecha: string;
-    url: string;
-    hash: string;
-  };
-}
+// New Chrono-Flare Core Types
 
-export interface DatosContratoArras {
-  precioVenta: number;
-  cantidadArras: number;
-  porcentajeArras: number;
-  tipoDeposito: "notaria" | "escrow";
-  notariaSeleccionada?: string;
-  fechaContrato: string;
-  plazoEscritura: number; // días
-  fechaLimiteEscritura: string;
-}
+export type ArrasRol = "vendedor" | "comprador" | "agente" | "notaria" | "admin";
 
-export interface DeclaracionVendedor {
-  titularidadCompleta: boolean;
-  cargas: string;
-  arrendamientos: boolean;
-  licencias: boolean;
-  deudas: boolean;
-  observaciones?: string;
-}
-
-export interface MensajeArras {
+export interface Documento {
   id: string;
-  tipo: "usuario" | "sistema" | "bot";
-  remitente: "vendedor" | "comprador" | "sistema" | "bot" | "certy";
-  texto: string;
-  timestamp: string;
-  certificado: boolean;
-  hash?: string;
-  adjuntos?: AdjuntoArras[];
-  leido?: boolean;
-  requiereConfirmacion?: boolean;
-  confirmadoPor?: ("vendedor" | "comprador")[];
-}
-
-export interface AdjuntoArras {
-  tipo: "foto" | "pdf" | "documento";
+  nombre: string;
+  tipo: "identidad" | "propiedad" | "contrato" | "justificante" | "certificacion" | "otro";
   url: string;
-  nombre: string;
   hash: string;
+  timestamp: string;
+  subidoPor: ArrasRol;
+  estado: "pendiente" | "validado" | "rechazado";
+  metadatos?: Record<string, any>;
 }
 
-export interface EventoTimelineArras {
+export interface Comunicacion {
   id: string;
-  tipo: string;
-  fecha: string;
+  remitente: ArrasRol;
+  destinatarios: ArrasRol[];
   mensaje: string;
-  icono?: string;
+  timestamp: string;
+  tipo: "chat" | "notificacion" | "alerta" | "sistema";
+  leido: boolean;
+  adjuntos?: Documento[];
+  evidencia?: {
+    hash: string;
+    tsa: string; // Timestamp Authority token stub
+  };
 }
 
-export interface ResultadoFormalizacion {
-  tipo: "escritura_formalizada" | "no_comparecencia_vendedor" | "no_comparecencia_comprador" | "mutuo_acuerdo";
-  fecha: string;
-  documento?: string;
-  observaciones?: string;
+export interface Evento {
+  id: string;
+  fase: ArrasFase;
+  descripcion: string;
+  actor: ArrasRol | "sistema";
+  timestamp: string;
+  tipo: "cambio_fase" | "documento" | "firma" | "pago" | "info";
+  hash?: string;
 }
 
-export interface ResolucionArras {
-  tipo: "imputadas_precio" | "perdida_comprador" | "devolucion_doblada" | "devolucion_simple";
-  monto: number;
-  fecha: string;
-  justificacion: string;
+export interface Parte {
+  id: string;
+  rol: ArrasRol;
+  nombre: string;
+  email: string;
+  telefono?: string;
+  kycAprobado: boolean;
+  avatar?: string;
 }
+
+export interface ContratoData {
+  precioVenta: number;
+  importeArras: number;
+  tipoArras: "penitenciales" | "confirmatorias" | "penales";
+  fechaTopeEscritura: string;
+  clausulasAdicionales?: string[];
+  ibanDeposito?: string;
+}
+
+// Expediente Aggregates
 
 export interface ExpedienteArras {
   id: string;
-  inmueble: InmuebleArras;
-  partes: {
-    vendedor: ParteArras;
-    comprador: ParteArras;
-    notaria?: ParteArras;
-    escrow?: ParteArras;
-  };
-  contrato: DatosContratoArras;
-  declaraciones?: DeclaracionVendedor;
-  fase: FaseArras;
-  mensajes: MensajeArras[];
-  eventos: EventoTimelineArras[];
+  referencia: string;
   fechaCreacion: string;
-  estado: "pendiente" | "activo" | "finalizado";
-  resultado?: ResultadoFormalizacion;
-  resolucion?: ResolucionArras;
+  faseActual: ArrasFase;
+
+  // Entities
+  partes: Parte[];
+  inmueble: {
+    direccion: string;
+    referenciaCatastral?: string;
+    datosRegistrales?: string;
+  };
+  contrato: ContratoData;
+
+  // Collections
+  inventarioDocumental: Documento[];
+  comunicaciones: Comunicacion[];
+  timeline: Evento[];
+
+  // Status
+  bloqueado: boolean; // Si está en espera de firma o validación
+  alertas: string[];
 }
+
+// Context State
 
 export interface ArrasState {
   expediente: ExpedienteArras;
-  vistaActual: "consola" | "movil" | "dual";
-  usuarioActual: "operador" | "vendedor" | "comprador";
+  usuarioActual: ArrasRol;
+  vista: "dashboard" | "wizard" | "documentos";
 }
 
 export interface ArrasContextType extends ArrasState {
-  cambiarVista: (vista: "consola" | "movil" | "dual") => void;
-  cambiarUsuario: (usuario: "operador" | "vendedor" | "comprador") => void;
-  cambiarFase: (fase: FaseArras) => void;
-  enviarMensaje: (mensaje: Omit<MensajeArras, "id" | "timestamp" | "certificado" | "hash" | "leido">) => void;
-  actualizarExpediente: (expediente: ExpedienteArras) => void;
-  marcarComoLeido: (mensajeId: string) => void;
-  confirmarMensaje: (mensajeId: string, remitente: "vendedor" | "comprador") => void;
-  contratos: ExpedienteArras[];
-  contratoSeleccionado: string;
-  seleccionarContrato: (id: string) => void;
+  setFase: (fase: ArrasFase) => void;
+  setUsuario: (rol: ArrasRol) => void;
+  setVista: (vista: "dashboard" | "wizard" | "documentos") => void;
+  addComunicacion: (msg: string, adjuntos?: Documento[]) => void;
+  uploadDocumento: (doc: Omit<Documento, "id" | "timestamp" | "hash" | "estado">) => void;
+  loadExpediente: (id: string) => void;
 }

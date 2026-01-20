@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, ShieldCheck, FileText, Home, Calendar, User, Hash, Download, ArrowLeft } from "lucide-react";
-import logoFaciliteCasa from "@/assets/logofaciliteaCasa.webp";
+
 import selloEidas from "@/assets/sello_eidas.png";
 import selloEadTrust from "@/assets/sello_eadtrust.png";
 import firmaEadTrust from "@/assets/firma_eadtrust.png";
@@ -50,7 +50,7 @@ const VerificacionDocumento = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img src={logoFaciliteCasa} alt="FaciliteCasas" className="h-10" />
+              <div className="text-xl font-bold text-primary mr-2">InmoServTech</div>
               <div className="flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-accent" />
                 <span className="font-semibold text-foreground">Verificación de Documentos</span>

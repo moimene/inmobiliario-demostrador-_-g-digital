@@ -9,7 +9,7 @@ export const EcosistemaSection = () => {
 
   const productosEcosistema = [
     {
-      name: "FaciliteaCoches",
+      name: "AutoServTech",
       sector: "Sector Automoción",
       icon: Car,
       url: "https://certificados-entrega.lovable.app",
@@ -54,10 +54,10 @@ export const EcosistemaSection = () => {
         {/* Encabezado de la sección */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-primary mb-4">
-            Ecosistema Facilitea: Más Allá del Sector Inmobiliario
+            Ecosistema g-digital: Más Allá del Sector Inmobiliario
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-2">
-            La misma infraestructura de certificación eIDAS que potencia Facilitea Casa, 
+            La misma infraestructura de certificación eIDAS que potencia InmoServTech,
             aplicada tanto a sectores específicos como a herramientas universales de certificación para transformar transacciones en operaciones legales certificadas.
           </p>
           <p className="text-sm font-medium text-accent">
@@ -68,7 +68,7 @@ export const EcosistemaSection = () => {
         {/* Grid de productos del ecosistema */}
         <div className="grid md:grid-cols-2 gap-6">
           {productosEcosistema.map((product) => (
-            <Card 
+            <Card
               key={product.name}
               className={`group hover:shadow-lg transition-all border-2 border-muted ${product.borderHover}`}
             >
@@ -110,7 +110,7 @@ export const EcosistemaSection = () => {
                   ))}
                 </div>
 
-                <Button 
+                <Button
                   onClick={() => handleNavigateExternal(product.url)}
                   className={`w-full ${product.bgButton} text-white transition-all group-hover:scale-[1.02]`}
                 >
