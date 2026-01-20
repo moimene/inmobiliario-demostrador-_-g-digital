@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen } from "lucide-react";
+import { ArrowLeft, BookOpen, FileCode, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ConceptGrid } from "@/components/conceptos/ConceptGrid";
 import { Footer } from "@/components/Footer";
@@ -52,6 +52,42 @@ const Conceptos = () => {
             las transacciones inmobiliarias en operaciones legales seguras.
           </p>
         </div>
+      </div>
+    </section>
+
+    {/* Card destacada: Contratos Computables */}
+    <section className="py-8 bg-background">
+      <div className="container px-6 mx-auto max-w-7xl">
+        <Card 
+          className="overflow-hidden cursor-pointer group bg-gradient-to-br from-[#1A2E4C] to-[#152238] border-2 border-[#0FE860]/30 hover:border-[#0FE860]/60 transition-all duration-300 hover:shadow-[0_0_40px_rgba(15,232,96,0.15)]"
+          onClick={() => navigate('/contratos-computables')}
+        >
+          <div className="p-8 md:p-10">
+            <div className="flex flex-col md:flex-row md:items-center gap-6">
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#0FE860]/10 border border-[#0FE860]/30 rounded-full mb-4">
+                  <FileCode className="h-4 w-4 text-[#0FE860]" />
+                  <span className="text-sm font-medium text-[#0FE860]">Nueva Frontera</span>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                  g-digital & <span className="text-[#0FE860]">Contratos Computables</span>
+                </h2>
+                <p className="text-white/70 leading-relaxed mb-4">
+                  Descubre cómo g-digital transforma documentos estáticos en procesos digitales 
+                  verificables y ejecutables: Derecho Computable, las 4 capas de arquitectura, 
+                  y la visión 2030 del futuro jurídico-digital.
+                </p>
+                <div className="flex items-center gap-2 text-[#C4F53B] group-hover:gap-4 transition-all">
+                  <span className="font-medium">Explorar la Visión Completa</span>
+                  <ArrowRight className="h-5 w-5" />
+                </div>
+              </div>
+              <div className="hidden md:flex items-center justify-center w-32 h-32 rounded-2xl bg-[#0FE860]/10 border border-[#0FE860]/20">
+                <FileCode className="h-16 w-16 text-[#0FE860]/60" />
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
     </section>
 
