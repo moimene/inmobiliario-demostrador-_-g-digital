@@ -1,10 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import { GDigitalLogo } from '@/components/deck/GDigitalLogo';
+import { ElectricButton } from '@/components/deck/ElectricButton';
 
 export const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* Back button */}
+      <div className="absolute top-6 left-6 z-20">
+        <ElectricButton
+          variant="secondary"
+          size="sm"
+          onClick={() => navigate('/')}
+          className="gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Volver
+        </ElectricButton>
+      </div>
       {/* Ambient lighting */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gdigital-green/15 rounded-full blur-[120px] animate-pulse" />
