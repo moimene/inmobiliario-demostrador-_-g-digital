@@ -8,6 +8,7 @@ import { ComunicacionesEstructuradas } from "./ComunicacionesEstructuradas";
 import { NotariaGestion } from "./NotariaGestion";
 import { CertificadoEventos } from "./CertificadoEventos";
 import { ResolucionCierrePanel } from "./ResolucionCierrePanel";
+import { HistorialNotificaciones } from "./HistorialNotificaciones";
 import { faseLabelsArras } from "@/data/arrasBotFlow";
 
 export const ExpedienteArrasDashboard = () => {
@@ -46,18 +47,7 @@ export const ExpedienteArrasDashboard = () => {
                 {/* Left Column: Timeline & Certifications */}
                 <div className="lg:col-span-1 space-y-6">
                     <CertificadoEventos events={expediente.eventos} />
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-lg">Próximos Pasos</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {/* Dynamic Next Steps Logic could go here */}
-                            <p className="text-sm text-muted-foreground">
-                                Esperando confirmación de {faseLabelsArras[fase]}...
-                            </p>
-                        </CardContent>
-                    </Card>
+                    <HistorialNotificaciones />
                 </div>
 
                 {/* Right Column: Workflows */}
