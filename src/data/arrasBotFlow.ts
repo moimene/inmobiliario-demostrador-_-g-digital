@@ -1,4 +1,4 @@
-import { MensajeArras, FaseArras } from "@/types/arras";
+import { FaseArras } from "@/types/arras";
 
 interface BotMessage {
   texto: string;
@@ -10,7 +10,7 @@ export const botFlowMessagesArras: Record<FaseArras, BotMessage[]> = {
   apertura_expediente_arras: [
     {
       texto:
-        "👋 APERTURA DEL EXPEDIENTE DE ARRAS\n\nBienvenidos al Canal de Arras Certificado FaciliteCasas.\n\nEste canal está operado por EAD Trust, prestador cualificado de servicios de confianza electrónica.\n\nA partir de este momento:\n• Todas las comunicaciones relevantes sobre estas arras se realizarán por este canal.\n• Cada mensaje y documento quedará asociado a un sello de tiempo cualificado y a un expediente certificado.\n• El canal funciona como gestor del ciclo de vida del contrato, y como única fuente de verdad en caso de duda o conflicto.\n\nAntes de continuar, cada parte debe confirmar que entiende cómo funciona el canal y que desea seguir adelante.",
+        "👋 APERTURA DEL EXPEDIENTE DE ARRAS\n\nBienvenidos al Canal de Arras Certificado g-digital.\n\nEste canal está operado por EAD Trust, prestador cualificado de servicios de confianza electrónica.\n\nA partir de este momento:\n• Todas las comunicaciones relevantes sobre estas arras se realizarán por este canal.\n• Cada mensaje y documento quedará asociado a un sello de tiempo cualificado y a un expediente certificado.\n• El canal funciona como gestor del ciclo de vida del contrato, y como única fuente de verdad en caso de duda o conflicto.\n\nAntes de continuar, cada parte debe confirmar que entiende cómo funciona el canal y que desea seguir adelante.",
       requiereConfirmacion: false,
     },
   ],

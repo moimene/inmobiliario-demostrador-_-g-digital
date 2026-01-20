@@ -48,7 +48,7 @@ export const ArrasWizard = () => {
                 </CardHeader>
                 <CardContent className="p-8">
                     {step === 1 && <Step1Identificacion onNext={handleNext} data={formData} />}
-                    {step === 2 && <Step2Inmueble onNext={handleNext} onPressBack={handleBack} data={formData} onBack={handleBack} />}
+                    {step === 2 && <Step2Inmueble onNext={handleNext} onBack={handleBack} data={formData} />}
                     {step === 3 && <Step3Condiciones onNext={handleNext} onBack={handleBack} data={formData} />}
                     {step === 4 && <Step4Configuracion onNext={handleNext} onBack={handleBack} data={formData} />}
                     {step === 5 && <Step5Resumen onNext={handleNext} onBack={handleBack} data={formData} />}

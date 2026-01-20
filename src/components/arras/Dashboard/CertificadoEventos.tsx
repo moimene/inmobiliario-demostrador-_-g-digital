@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Evento } from "@/types/arras";
+import { EventoTimelineArras } from "@/types/arras";
 import { ShieldAlert, Activity } from "lucide-react";
 
 interface Props {
-    events: Evento[];
+    events: EventoTimelineArras[];
 }
 
 export const CertificadoEventos = ({ events }: Props) => {
@@ -26,9 +26,9 @@ export const CertificadoEventos = ({ events }: Props) => {
                             {events.slice(0, 5).map(evt => (
                                 <div key={evt.id} className="relative">
                                     <div className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-accent" />
-                                    <p className="text-xs font-semibold">{evt.descripcion}</p>
+                                    <p className="text-xs font-semibold">{evt.mensaje}</p>
                                     <p className="text-[10px] text-muted-foreground font-mono">
-                                        {new Date(evt.timestamp).toLocaleString()}
+                                        {new Date(evt.fecha).toLocaleString()}
                                     </p>
                                 </div>
                             ))}

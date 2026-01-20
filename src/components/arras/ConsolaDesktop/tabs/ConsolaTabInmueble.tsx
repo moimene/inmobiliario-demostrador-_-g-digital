@@ -6,6 +6,11 @@ import { Home, Ruler, Bed, Bath, Building } from "lucide-react";
 export const ConsolaTabInmueble = () => {
   const { expediente } = useArras();
 
+  // Type guard for datosRegistrales
+  const datosRegistrales = typeof expediente.inmueble.datosRegistrales === 'object' 
+    ? expediente.inmueble.datosRegistrales 
+    : null;
+
   return (
     <div className="p-6 space-y-6 bg-slate-950">
       {/* Datos del inmueble */}
@@ -25,62 +30,72 @@ export const ConsolaTabInmueble = () => {
               </p>
             </div>
 
-            <div>
-              <p className="text-xs text-slate-400 mb-1">Tipo de inmueble</p>
-              <p className="text-sm text-slate-100">{expediente.inmueble.tipo}</p>
-            </div>
-
-            <div>
-              <p className="text-xs text-slate-400 mb-1">Superficie</p>
-              <div className="flex items-center gap-2">
-                <Ruler className="h-4 w-4 text-slate-400" />
-                <p className="text-sm font-semibold text-slate-100">
-                  {expediente.inmueble.superficie} m²
-                </p>
+            {expediente.inmueble.tipo && (
+              <div>
+                <p className="text-xs text-slate-400 mb-1">Tipo de inmueble</p>
+                <p className="text-sm text-slate-100">{expediente.inmueble.tipo}</p>
               </div>
-            </div>
+            )}
 
-            <div>
-              <p className="text-xs text-slate-400 mb-1">Habitaciones</p>
-              <div className="flex items-center gap-2">
-                <Bed className="h-4 w-4 text-slate-400" />
-                <p className="text-sm font-semibold text-slate-100">
-                  {expediente.inmueble.habitaciones}
-                </p>
+            {expediente.inmueble.superficie && (
+              <div>
+                <p className="text-xs text-slate-400 mb-1">Superficie</p>
+                <div className="flex items-center gap-2">
+                  <Ruler className="h-4 w-4 text-slate-400" />
+                  <p className="text-sm font-semibold text-slate-100">
+                    {expediente.inmueble.superficie} m²
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div>
-              <p className="text-xs text-slate-400 mb-1">Baños</p>
-              <div className="flex items-center gap-2">
-                <Bath className="h-4 w-4 text-slate-400" />
-                <p className="text-sm font-semibold text-slate-100">{expediente.inmueble.banos}</p>
+            {expediente.inmueble.habitaciones && (
+              <div>
+                <p className="text-xs text-slate-400 mb-1">Habitaciones</p>
+                <div className="flex items-center gap-2">
+                  <Bed className="h-4 w-4 text-slate-400" />
+                  <p className="text-sm font-semibold text-slate-100">
+                    {expediente.inmueble.habitaciones}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
+
+            {expediente.inmueble.banos && (
+              <div>
+                <p className="text-xs text-slate-400 mb-1">Baños</p>
+                <div className="flex items-center gap-2">
+                  <Bath className="h-4 w-4 text-slate-400" />
+                  <p className="text-sm font-semibold text-slate-100">{expediente.inmueble.banos}</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Características adicionales */}
-          <div className="border-t border-slate-700 pt-4">
-            <p className="text-sm font-semibold text-slate-100 mb-3">Características</p>
-            <div className="grid grid-cols-2 gap-3">
-              {Object.entries(expediente.inmueble.caracteristicas).map(([key, value]) => (
-                <div key={key} className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5" />
-                  <div className="flex-1">
-                    <p className="text-xs text-slate-400 capitalize">
-                      {key.replace(/([A-Z])/g, " $1").trim()}
-                    </p>
-                    <p className="text-sm text-slate-100">{String(value)}</p>
+          {expediente.inmueble.caracteristicas && (
+            <div className="border-t border-slate-700 pt-4">
+              <p className="text-sm font-semibold text-slate-100 mb-3">Características</p>
+              <div className="grid grid-cols-2 gap-3">
+                {Object.entries(expediente.inmueble.caracteristicas).map(([key, value]) => (
+                  <div key={key} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5" />
+                    <div className="flex-1">
+                      <p className="text-xs text-slate-400 capitalize">
+                        {key.replace(/([A-Z])/g, " $1").trim()}
+                      </p>
+                      <p className="text-sm text-slate-100">{String(value)}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </CardContent>
       </Card>
 
-      {/* Datos registrales (si existen) */}
-      {expediente.inmueble.datosRegistrales && (
+      {/* Datos registrales (si existen como objeto) */}
+      {datosRegistrales && (
         <Card className="border-slate-700 bg-slate-900/50">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -95,40 +110,50 @@ export const ConsolaTabInmueble = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Finca registral</p>
-                <p className="text-sm font-mono text-slate-100">
-                  {expediente.inmueble.datosRegistrales.fincaRegistral}
-                </p>
-              </div>
+              {datosRegistrales.fincaRegistral && (
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Finca registral</p>
+                  <p className="text-sm font-mono text-slate-100">
+                    {datosRegistrales.fincaRegistral}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Tomo</p>
-                <p className="text-sm font-mono text-slate-100">
-                  {expediente.inmueble.datosRegistrales.tomo}
-                </p>
-              </div>
+              {datosRegistrales.tomo && (
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Tomo</p>
+                  <p className="text-sm font-mono text-slate-100">
+                    {datosRegistrales.tomo}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Libro</p>
-                <p className="text-sm font-mono text-slate-100">
-                  {expediente.inmueble.datosRegistrales.libro}
-                </p>
-              </div>
+              {datosRegistrales.libro && (
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Libro</p>
+                  <p className="text-sm font-mono text-slate-100">
+                    {datosRegistrales.libro}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Folio</p>
-                <p className="text-sm font-mono text-slate-100">
-                  {expediente.inmueble.datosRegistrales.folio}
-                </p>
-              </div>
+              {datosRegistrales.folio && (
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Folio</p>
+                  <p className="text-sm font-mono text-slate-100">
+                    {datosRegistrales.folio}
+                  </p>
+                </div>
+              )}
 
-              <div className="col-span-2">
-                <p className="text-xs text-slate-400 mb-1">Registro de la Propiedad</p>
-                <p className="text-sm text-slate-100">
-                  {expediente.inmueble.datosRegistrales.registroPropiedad}
-                </p>
-              </div>
+              {datosRegistrales.registroPropiedad && (
+                <div className="col-span-2">
+                  <p className="text-xs text-slate-400 mb-1">Registro de la Propiedad</p>
+                  <p className="text-sm text-slate-100">
+                    {datosRegistrales.registroPropiedad}
+                  </p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

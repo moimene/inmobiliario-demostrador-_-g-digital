@@ -62,7 +62,7 @@ export const mensajesMock: MensajeArras[] = [
     tipo: "bot",
     remitente: "bot",
     texto:
-      "👋 APERTURA DEL EXPEDIENTE DE ARRAS\n\nBienvenidos al Canal de Arras Certificado FaciliteCasas.\n\nEste canal está operado por EAD Trust, prestador cualificado de servicios de confianza electrónica.\n\nA partir de este momento:\n• Todas las comunicaciones relevantes sobre estas arras se realizarán por este canal.\n• Cada mensaje y documento quedará asociado a un sello de tiempo cualificado y a un expediente certificado.\n• El canal funciona como gestor del ciclo de vida del contrato, y como única fuente de verdad en caso de duda o conflicto.\n\nAntes de continuar, cada parte debe confirmar que entiende cómo funciona el canal y que desea seguir adelante.",
+      "👋 APERTURA DEL EXPEDIENTE DE ARRAS\n\nBienvenidos al Canal de Arras Certificado g-digital.\n\nEste canal está operado por EAD Trust, prestador cualificado de servicios de confianza electrónica.\n\nA partir de este momento:\n• Todas las comunicaciones relevantes sobre estas arras se realizarán por este canal.\n• Cada mensaje y documento quedará asociado a un sello de tiempo cualificado y a un expediente certificado.\n• El canal funciona como gestor del ciclo de vida del contrato, y como única fuente de verdad en caso de duda o conflicto.\n\nAntes de continuar, cada parte debe confirmar que entiende cómo funciona el canal y que desea seguir adelante.",
     timestamp: "2026-02-01T10:00:00Z",
     certificado: true,
     hash: "a1b2c3d4e5f6",
@@ -96,3 +96,46 @@ export const expedienteArrasMock: ExpedienteArras = {
   fechaCreacion: "2026-02-01T10:00:00Z",
   estado: "activo",
 };
+
+// Multiple contracts for list view
+export const contratosArrasMock: ExpedienteArras[] = [
+  expedienteArrasMock,
+  {
+    ...expedienteArrasMock,
+    id: "ARRAS-2026-002",
+    fase: "identificacion_partes_arras",
+    inmueble: {
+      ...inmueble,
+      direccion: "Av. Diagonal 456, 5ºA, 08006 Barcelona",
+    },
+    partes: {
+      vendedor: { ...vendedor, nombre: "Carlos Ruiz López" },
+      comprador: { ...comprador, nombre: "Elena Torres Martín" },
+    },
+    contrato: {
+      ...datosContrato,
+      precioVenta: 420000,
+      cantidadArras: 42000,
+    },
+    fechaCreacion: "2026-01-28T14:30:00Z",
+  },
+  {
+    ...expedienteArrasMock,
+    id: "ARRAS-2026-003",
+    fase: "generacion_y_firma_contrato_arras",
+    inmueble: {
+      ...inmueble,
+      direccion: "C/ Gran Vía 78, 2ºB, 28013 Madrid",
+    },
+    partes: {
+      vendedor: { ...vendedor, nombre: "Ana Fernández García" },
+      comprador: { ...comprador, nombre: "Pedro Jiménez Ruiz" },
+    },
+    contrato: {
+      ...datosContrato,
+      precioVenta: 195000,
+      cantidadArras: 19500,
+    },
+    fechaCreacion: "2026-01-20T09:15:00Z",
+  },
+];
