@@ -27,6 +27,7 @@ import {
   XCircle
 } from "lucide-react";
 import { toast } from "sonner";
+import { generarCertificadoQTSP } from "@/utils/generarCertificadoQTSP";
 
 type TipoCierre = 'mutuo_acuerdo' | 'litigio' | null;
 
@@ -60,14 +61,28 @@ export const ResolucionCierrePanel = () => {
   const handleDeclaraLitigio = () => {
     setProcesando(true);
     
-    // Simular generación de evidencias
+    // Generar certificado QTSP real
     setTimeout(() => {
-      toast.success("Controversia declarada - Evidencias generadas", {
-        description: "Certificado QTSP completo generado con audit trail"
-      });
+      try {
+        const resultado = generarCertificadoQTSP({
+          expediente,
+          fechaDeclaracion: new Date().toISOString(),
+          motivoDeclaracion: "Controversia declarada por una de las partes"
+        });
+        
+        toast.success("Controversia declarada - Certificado QTSP generado", {
+          description: `Archivo: ${resultado.fileName}`,
+          duration: 5000
+        });
+      } catch (error) {
+        toast.error("Error al generar el certificado", {
+          description: "Por favor, inténtelo de nuevo"
+        });
+      }
+      
       setProcesando(false);
       setTipoCierreSeleccionado(null);
-    }, 3000);
+    }, 1500);
   };
 
   if (esEstadoTerminal) {
