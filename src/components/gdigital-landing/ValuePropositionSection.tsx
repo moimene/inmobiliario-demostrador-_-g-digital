@@ -13,7 +13,7 @@ const valueProps = [
   {
     icon: Users,
     title: 'Cliente Cero',
-    description: 'Garrigues es el primer usuario de todas las soluciones de G-digital. Probamos, validamos y perfeccionamos cada herramienta en nuestra propia operativa antes de llevarla al mercado.',
+    description: 'Garrigues es el primer usuario de todas las soluciones de g-digital. Probamos, validamos y perfeccionamos cada herramienta en nuestra propia operativa antes de llevarla al mercado.',
     highlight: 'Battle-tested',
   },
   {
