@@ -1,0 +1,36 @@
+import { Button } from "@/components/ui/button";
+import { Monitor, Smartphone, Users } from "lucide-react";
+import { useArras } from "@/contexts/ArrasContext";
+
+export const ViewSelectorArras = () => {
+  const { vistaActual, cambiarVista } = useArras();
+
+  return (
+    <div className="flex gap-2 justify-center">
+      <Button
+        onClick={() => cambiarVista("consola")}
+        variant={vistaActual === "consola" ? "default" : "outline"}
+        size="sm"
+      >
+        <Monitor className="h-4 w-4 mr-2" />
+        Consola
+      </Button>
+      <Button
+        onClick={() => cambiarVista("movil")}
+        variant={vistaActual === "movil" ? "default" : "outline"}
+        size="sm"
+      >
+        <Smartphone className="h-4 w-4 mr-2" />
+        Móvil
+      </Button>
+      <Button
+        onClick={() => cambiarVista("dual")}
+        variant={vistaActual === "dual" ? "default" : "outline"}
+        size="sm"
+      >
+        <Users className="h-4 w-4 mr-2" />
+        Dual
+      </Button>
+    </div>
+  );
+};
