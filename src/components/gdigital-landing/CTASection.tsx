@@ -43,7 +43,7 @@ export const CTASection: React.FC = () => {
           </h2>
 
           <p className="text-lg text-white/70 max-w-2xl mx-auto mb-10">
-            Conéctese con nuestro equipo de expertos legales y tecnológicos para explorar cómo G-digital puede transformar sus procesos.
+            Conéctese con nuestro equipo de expertos legales y tecnológicos para explorar cómo g-digital puede transformar sus procesos.
           </p>
 
           {/* CTAs */}
@@ -55,7 +55,7 @@ export const CTASection: React.FC = () => {
               className="gap-2"
             >
               <Mail className="w-5 h-5" />
-              Contactar con G-digital
+              Contactar con g-digital
               <ArrowRight className="w-5 h-5" />
             </ElectricButton>
 

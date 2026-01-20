@@ -34,7 +34,7 @@ export const AboutSection: React.FC = () => {
 
             <div className="space-y-5 text-white/80 leading-relaxed">
               <p>
-                <span className="text-gdigital-green font-semibold">G-digital</span> es la división de innovación y negocio digital del 
+                <span className="text-gdigital-green font-semibold">g-digital</span> es la división de innovación y negocio digital del 
                 <span className="text-white font-medium"> Grupo Garrigues</span>. No somos solo un proveedor de software; somos una 
                 <span className="text-gdigital-lime font-medium"> factoría de LegalTech</span> que integra ingeniería tecnológica y dirección jurídica para crear productos y servicios innovadores.
               </p>
