@@ -47,7 +47,8 @@ export const EcosistemaSection = () => {
         </div>
 
         {/* Grid de productos del ecosistema */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="flex justify-center">
+          <div className="max-w-lg w-full">
           {productosEcosistema.map((product) => (
             <Card
               key={product.name}
@@ -101,6 +102,7 @@ export const EcosistemaSection = () => {
               </CardContent>
             </Card>
           ))}
+          </div>
         </div>
 
         {/* Mensaje de coherencia tecnológica */}
