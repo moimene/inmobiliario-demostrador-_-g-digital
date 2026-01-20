@@ -6,6 +6,9 @@ import { User, FileSignature, Landmark } from "lucide-react";
 export const ConsolaTabPartes = () => {
   const { expediente } = useArras();
 
+  // Get notaria from contract if available
+  const notariaInfo = expediente.contrato.notariaSeleccionada;
+
   return (
     <div className="p-6 space-y-6 bg-slate-950">
       {/* Vendedor */}
@@ -119,8 +122,8 @@ export const ConsolaTabPartes = () => {
         </CardContent>
       </Card>
 
-      {/* Notaría (si existe) */}
-      {expediente.partes.notaria && (
+      {/* Notaría (from contract data) */}
+      {notariaInfo && (
         <Card className="border-slate-700 bg-slate-900/50">
           <CardHeader>
             <CardTitle className="text-slate-100 flex items-center gap-2">
@@ -130,27 +133,10 @@ export const ConsolaTabPartes = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Nombre</p>
+              <div className="col-span-2">
+                <p className="text-xs text-slate-400 mb-1">Notaría seleccionada</p>
                 <p className="text-sm font-semibold text-slate-100">
-                  {expediente.partes.notaria.nombre}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Email</p>
-                <p className="text-sm text-slate-100">{expediente.partes.notaria.email}</p>
-              </div>
-
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Email</p>
-                <p className="text-sm text-slate-100">{expediente.partes.notaria.email}</p>
-              </div>
-
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Teléfono</p>
-                <p className="text-sm font-mono text-slate-100">
-                  {expediente.partes.notaria.telefono}
+                  {notariaInfo}
                 </p>
               </div>
             </div>
@@ -164,8 +150,8 @@ export const ConsolaTabPartes = () => {
         </Card>
       )}
 
-      {/* Escrow (si existe) */}
-      {expediente.partes.escrow && (
+      {/* Escrow (if tokenized deposit) */}
+      {expediente.contrato.tipoDeposito === "escrow" || expediente.contrato.tipoDeposito === "tokenizado" ? (
         <Card className="border-slate-700 bg-slate-900/50">
           <CardHeader>
             <CardTitle className="text-slate-100 flex items-center gap-2">
@@ -175,29 +161,10 @@ export const ConsolaTabPartes = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Entidad</p>
-                <p className="text-sm font-semibold text-slate-100">
-                  {expediente.partes.escrow.nombre}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs text-slate-400 mb-1">CIF</p>
-                <p className="text-sm font-mono text-slate-100">
-                  {expediente.partes.escrow.nif}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Email</p>
-                <p className="text-sm text-slate-100">{expediente.partes.escrow.email}</p>
-              </div>
-
-              <div>
-                <p className="text-xs text-slate-400 mb-1">Teléfono</p>
-                <p className="text-sm font-mono text-slate-100">
-                  {expediente.partes.escrow.telefono}
+              <div className="col-span-2">
+                <p className="text-xs text-slate-400 mb-1">Tipo de depósito</p>
+                <p className="text-sm font-semibold text-slate-100 capitalize">
+                  {expediente.contrato.tipoDeposito}
                 </p>
               </div>
             </div>
@@ -209,7 +176,7 @@ export const ConsolaTabPartes = () => {
             </div>
           </CardContent>
         </Card>
-      )}
+      ) : null}
     </div>
   );
 };

@@ -7,10 +7,11 @@ import { InventarioDocumental } from "./InventarioDocumental";
 import { ComunicacionesEstructuradas } from "./ComunicacionesEstructuradas";
 import { NotariaGestion } from "./NotariaGestion";
 import { CertificadoEventos } from "./CertificadoEventos";
+import { faseLabelsArras } from "@/data/arrasBotFlow";
 
 export const ExpedienteArrasDashboard = () => {
     const { expediente, usuarioActual } = useArras();
-    const { referencia, faseActual, partes, inmueble } = expediente;
+    const { id, fase, partes, inmueble } = expediente;
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-7xl animate-fade-in">
@@ -18,14 +19,14 @@ export const ExpedienteArrasDashboard = () => {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
                     <div className="flex items-center gap-2 mb-1">
-                        <Badge variant="outline" className="text-muted-foreground">Expediente {referencia}</Badge>
-                        <Badge variant="secondary" className="capitalize">{faseActual.replace(/_/g, " ")}</Badge>
+                        <Badge variant="outline" className="text-muted-foreground">Expediente {id}</Badge>
+                        <Badge variant="secondary">{faseLabelsArras[fase]}</Badge>
                     </div>
                     <h1 className="text-3xl font-bold tracking-tight text-primary">
                         {inmueble.direccion}
                     </h1>
                     <p className="text-muted-foreground">
-                        {partes.find(p => p.rol === "vendedor")?.nombre} • {partes.find(p => p.rol === "comprador")?.nombre}
+                        {partes.vendedor.nombre} • {partes.comprador.nombre}
                     </p>
                 </div>
 
@@ -43,7 +44,7 @@ export const ExpedienteArrasDashboard = () => {
 
                 {/* Left Column: Timeline & Certifications */}
                 <div className="lg:col-span-1 space-y-6">
-                    <CertificadoEventos events={expediente.timeline} />
+                    <CertificadoEventos events={expediente.eventos} />
 
                     <Card>
                         <CardHeader>
@@ -52,7 +53,7 @@ export const ExpedienteArrasDashboard = () => {
                         <CardContent>
                             {/* Dynamic Next Steps Logic could go here */}
                             <p className="text-sm text-muted-foreground">
-                                Esperando confirmación de {faseActual}...
+                                Esperando confirmación de {faseLabelsArras[fase]}...
                             </p>
                         </CardContent>
                     </Card>
@@ -73,11 +74,11 @@ export const ExpedienteArrasDashboard = () => {
                         </TabsContent>
 
                         <TabsContent value="docs" className="mt-6">
-                            <InventarioDocumental documentos={expediente.inventarioDocumental} />
+                            <InventarioDocumental documentos={expediente.inventarioDocumental || []} />
                         </TabsContent>
 
                         <TabsContent value="comms" className="mt-6">
-                            <ComunicacionesEstructuradas mensajes={expediente.comunicaciones} />
+                            <ComunicacionesEstructuradas mensajes={expediente.comunicaciones || []} />
                         </TabsContent>
 
                         <TabsContent value="notaria" className="mt-6">

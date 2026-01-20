@@ -31,7 +31,7 @@ export const contratosArrasMock: ExpedienteArras[] = [
       direccion: "C/ Goya 42, 4ºD, 28009 Madrid",
     },
     fase: "resultado_formalizacion",
-    estado: "finalizado",
+    estado: "cerrado",
     fechaCreacion: "2025-12-20T14:20:00Z",
   },
 ];

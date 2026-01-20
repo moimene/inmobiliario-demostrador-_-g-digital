@@ -9,7 +9,7 @@ export const generarContratoArrasPDF = (expediente: ExpedienteArras) => {
     doc.text("Contrato de Arras Penitenciales", 105, 20, { align: "center" });
 
     doc.setFontSize(10);
-    doc.text(`Referencia: ${expediente.referencia}`, 20, 30);
+    doc.text(`Referencia: ${expediente.id}`, 20, 30);
     doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 150, 30);
 
     // Partes
@@ -17,13 +17,13 @@ export const generarContratoArrasPDF = (expediente: ExpedienteArras) => {
     doc.text("REUNIDOS", 20, 45);
     doc.setFontSize(10);
 
-    const vendedor = expediente.partes.find(p => p.rol === "vendedor");
-    const comprador = expediente.partes.find(p => p.rol === "comprador");
+    const vendedor = expediente.partes.vendedor;
+    const comprador = expediente.partes.comprador;
 
-    doc.text(`De una parte, DON/DOÑA ${vendedor?.nombre || "_______________"}, con NIF _______________`, 20, 55);
+    doc.text(`De una parte, DON/DOÑA ${vendedor?.nombre || "_______________"}, con NIF ${vendedor?.nif || "_______________"}`, 20, 55);
     doc.text("En concepto de VENDEDOR.", 20, 60);
 
-    doc.text(`De otra parte, DON/DOÑA ${comprador?.nombre || "_______________"}, con NIF _______________`, 20, 70);
+    doc.text(`De otra parte, DON/DOÑA ${comprador?.nombre || "_______________"}, con NIF ${comprador?.nif || "_______________"}`, 20, 70);
     doc.text("En concepto de COMPRADOR.", 20, 75);
 
     // Exponen
@@ -40,11 +40,11 @@ export const generarContratoArrasPDF = (expediente: ExpedienteArras) => {
     doc.setFontSize(10);
 
     const precio = expediente.contrato.precioVenta.toLocaleString("es-ES");
-    const arras = expediente.contrato.importeArras.toLocaleString("es-ES");
+    const arras = expediente.contrato.cantidadArras.toLocaleString("es-ES");
 
     const clausula1 = `PRIMERA.- El precio pactado para la compraventa es de ${precio} EUROS.`;
     const clausula2 = `SEGUNDA.- En este acto, la parte COMPRADORA entrega a la VENDEDORA la cantidad de ${arras} EUROS en concepto de ARRAS PENITENCIALES, de conformidad con el artículo 1454 del Código Civil.`;
-    const clausula3 = `TERCERA.- La escritura pública de compraventa se otorgará antes del día ${expediente.contrato.fechaTopeEscritura}.`;
+    const clausula3 = `TERCERA.- La escritura pública de compraventa se otorgará antes del día ${expediente.contrato.fechaLimiteEscritura}.`;
 
     let y = 130;
     doc.text(doc.splitTextToSize(clausula1, 170), 20, y); y += 10;
@@ -61,5 +61,5 @@ export const generarContratoArrasPDF = (expediente: ExpedienteArras) => {
     doc.setTextColor(150);
     doc.text("Documento generado por Infraestructura g-digital Chrono-Flare. Hash certificado: _______________", 105, 280, { align: "center" });
 
-    doc.save(`Contrato_Arras_${expediente.referencia}.pdf`);
+    doc.save(`Contrato_Arras_${expediente.id}.pdf`);
 };

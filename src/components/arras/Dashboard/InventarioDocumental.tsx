@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Documento } from "@/types/arras";
 import { FileText, Download, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +41,7 @@ export const InventarioDocumental = ({ documentos }: Props) => {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <ShieldCheck className="h-4 w-4 text-green-600" title="Validado por Notaría" />
+                                    <ShieldCheck className="h-4 w-4 text-green-600" />
                                     <Button variant="ghost" size="icon" className="h-8 w-8">
                                         <Download className="h-4 w-4" />
                                     </Button>

@@ -1,9 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Monitor, Smartphone, Users } from "lucide-react";
-import { useArras } from "@/contexts/ArrasContext";
+import { useState } from "react";
+
+type VistaArras = "consola" | "movil" | "dual";
 
 export const ViewSelectorArras = () => {
-  const { vistaActual, cambiarVista } = useArras();
+  const [vistaActual, setVistaActual] = useState<VistaArras>("consola");
+
+  const cambiarVista = (vista: VistaArras) => {
+    setVistaActual(vista);
+  };
 
   return (
     <div className="flex gap-2 justify-center">
