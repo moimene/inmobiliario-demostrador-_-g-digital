@@ -106,8 +106,16 @@ export const Footer = () => {
       </div>
 
       {/* Disclaimer */}
-      <div className="border-t border-primary-foreground/20 pt-6">
-
+      <div className="border-t border-primary-foreground/20 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-xs text-primary-foreground/60">
+          © {new Date().getFullYear()} g-digital · Grupo Garrigues
+        </p>
+        <Link 
+          to="/aviso-legal" 
+          className="text-xs text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+        >
+          Aviso Legal y Política de Privacidad
+        </Link>
       </div>
     </div>
   </footer>;

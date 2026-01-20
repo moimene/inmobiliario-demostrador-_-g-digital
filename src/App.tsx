@@ -15,6 +15,7 @@ import GestionAvanzadaDemo from "./pages/demos/GestionAvanzadaDemo";
 import VerificacionDocumento from "./pages/VerificacionDocumento";
 import PresentacionGDigital from "./pages/PresentacionGDigital";
 import ContratosComputables from "./pages/ContratosComputables";
+import AvisoLegal from "./pages/AvisoLegal";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/demo/certificacion-documentos" element={<CertificacionDocumentosDemo />} />
           <Route path="/demo/gestion-avanzada" element={<GestionAvanzadaDemo />} />
           <Route path="/verificacion/:id" element={<VerificacionDocumento />} />
+          <Route path="/aviso-legal" element={<AvisoLegal />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
