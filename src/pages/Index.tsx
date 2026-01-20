@@ -16,7 +16,7 @@ const Index = () => {
     <SolutionSection />
     <DemoSelector />
     <EcosistemaSection />
-    <GDigitalEmbed />
+    
 
     {/* Legal Impact Section */}
 
