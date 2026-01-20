@@ -14,6 +14,7 @@ import CertificacionDocumentosDemo from "./pages/demos/CertificacionDocumentosDe
 import GestionAvanzadaDemo from "./pages/demos/GestionAvanzadaDemo";
 import VerificacionDocumento from "./pages/VerificacionDocumento";
 import PresentacionGDigital from "./pages/PresentacionGDigital";
+import ContratosComputables from "./pages/ContratosComputables";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/conceptos" element={<Conceptos />} />
           <Route path="/presentacion-gdigital" element={<PresentacionGDigital />} />
+          <Route path="/contratos-computables" element={<ContratosComputables />} />
           <Route path="/demo/estado-inmueble" element={<EstadoInmuebleDemo />} />
           <Route path="/demo/canal-arrendamiento" element={<CanalArrendamientoDemo />} />
           <Route path="/demo/canal-arras" element={<CanalArrasDemo />} />
