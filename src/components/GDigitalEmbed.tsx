@@ -26,7 +26,7 @@ export const GDigitalEmbed = () => {
                             <Button
                                 size="lg"
                                 className="gap-2 shadow-lg hover:shadow-xl transition-all"
-                                onClick={() => window.open('https://www.g-digital.garrigues.com/', '_blank')}
+                                onClick={() => window.open('https://g-digital.garrigues.com/es_ES/nosotros', '_blank')}
                             >
                                 Visitar Sitio Oficial
                                 <ExternalLink className="w-4 h-4" />
@@ -36,7 +36,7 @@ export const GDigitalEmbed = () => {
 
                     <div className="flex-1 w-full h-[400px] bg-muted rounded-2xl border shadow-2xl overflow-hidden relative group">
                         <iframe
-                            src="https://www.g-digital.garrigues.com/"
+                            src="https://g-digital.garrigues.com/es_ES/nosotros"
                             className="w-full h-full border-0"
                             title="g-digital website"
                             sandbox="allow-scripts allow-same-origin allow-popups"

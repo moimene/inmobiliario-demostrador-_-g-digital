@@ -29,7 +29,7 @@ export const Footer = () => {
             </li>
             <li>
               <a
-                href="https://www.g-digital.garrigues.com/"
+                href="https://g-digital.garrigues.com/es_ES/nosotros"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors flex items-center gap-1"

@@ -62,7 +62,7 @@ export const CTASection: React.FC = () => {
             <ElectricButton
               size="lg"
               variant="secondary"
-              onClick={() => window.open('https://www.g-digital.garrigues.com/', '_blank')}
+              onClick={() => window.open('https://g-digital.garrigues.com/es_ES/nosotros', '_blank')}
               className="gap-2"
             >
               Visitar Portal
