@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Check, Home, FileText, Users, ClipboardList, FileCheck, PenTool } from "lucide-react";
+import { Check, Home, FileText, Users, ClipboardList, FileCheck, PenTool, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface StepperProgressProps {
   currentStep: number;
@@ -18,7 +19,20 @@ const STEPS = [
 
 export const StepperProgress = ({ currentStep, totalSteps }: StepperProgressProps) => {
   return (
-    <div className="w-full px-2">
+    <div className="w-full px-2 space-y-3">
+      {/* Enlace al Observatorio */}
+      <div className="flex justify-center">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="gap-2 text-xs text-muted-foreground hover:text-primary"
+          onClick={() => window.open('https://www.comillas.edu/investigacion/observatorio-legaltech/foro-ktech/', '_blank')}
+        >
+          <ExternalLink className="h-3 w-3" />
+          Estándar Observatorio Legaltech ICADE-Garrigues
+        </Button>
+      </div>
+
       <div className="relative flex justify-between items-center">
         {/* Connection line background */}
         <div className="absolute top-5 left-0 right-0 h-0.5 bg-muted" />
