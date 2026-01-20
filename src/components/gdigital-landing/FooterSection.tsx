@@ -1,0 +1,48 @@
+import React from 'react';
+import { GDigitalLogo } from '@/components/deck/GDigitalLogo';
+
+export const FooterSection: React.FC = () => {
+  return (
+    <footer className="py-12 border-t border-gdigital-green/20">
+      <div className="container px-6 mx-auto max-w-6xl">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Logo */}
+          <GDigitalLogo size="sm" />
+
+          {/* Links */}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
+            <a 
+              href="https://www.g-digital.garrigues.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-gdigital-green transition-colors"
+            >
+              Portal G-digital
+            </a>
+            <a 
+              href="https://www.garrigues.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-gdigital-green transition-colors"
+            >
+              Garrigues
+            </a>
+            <a 
+              href="https://www.eadtrust.eu/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-gdigital-green transition-colors"
+            >
+              EADTrust
+            </a>
+          </div>
+
+          {/* Copyright */}
+          <div className="text-sm text-white/40">
+            © {new Date().getFullYear()} G-digital · Grupo Garrigues
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};

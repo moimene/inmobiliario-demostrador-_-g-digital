@@ -1,14 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface GDigitalLogoProps {
   size?: 'sm' | 'md' | 'lg';
   animated?: boolean;
+  className?: string;
 }
 
 export const GDigitalLogo: React.FC<GDigitalLogoProps> = ({
   size = 'md',
   animated = true,
+  className,
 }) => {
   const sizeClasses = {
     sm: 'text-xl',
@@ -17,7 +20,7 @@ export const GDigitalLogo: React.FC<GDigitalLogoProps> = ({
   };
 
   const Logo = (
-    <div className={`font-heading font-bold ${sizeClasses[size]} flex items-center gap-2`}>
+    <div className={cn(`font-heading font-bold ${sizeClasses[size]} flex items-center gap-2`, className)}>
       <span className="text-gdigital-green">g</span>
       <span className="text-white">-</span>
       <span className="bg-gradient-to-r from-gdigital-green to-gdigital-lime bg-clip-text text-transparent">
