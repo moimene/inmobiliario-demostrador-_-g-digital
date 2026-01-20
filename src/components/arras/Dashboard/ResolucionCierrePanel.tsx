@@ -62,7 +62,7 @@ export const ResolucionCierrePanel = () => {
     
     // Simular generación de evidencias
     setTimeout(() => {
-      toast.success("Litigio declarado - Evidencias generadas", {
+      toast.success("Controversia declarada - Evidencias generadas", {
         description: "Certificado QTSP completo generado con audit trail"
       });
       setProcesando(false);
@@ -174,7 +174,7 @@ export const ResolucionCierrePanel = () => {
                   <ShieldAlert className="h-6 w-6 text-red-600" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Declarar Litigio</CardTitle>
+                  <CardTitle className="text-lg">Declarar Controversia</CardTitle>
                   <CardDescription>Incumplimiento (Contencioso)</CardDescription>
                 </div>
               </div>
@@ -196,7 +196,7 @@ export const ResolucionCierrePanel = () => {
             </div>
 
             <div className="pt-2 border-t">
-              <p className="text-xs text-muted-foreground mb-2">Estado final: <span className="font-semibold text-destructive">LITIGIO</span></p>
+              <p className="text-xs text-muted-foreground mb-2">Estado final: <span className="font-semibold text-destructive">CONTROVERSIA</span></p>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button 
@@ -205,19 +205,19 @@ export const ResolucionCierrePanel = () => {
                     onClick={() => setTipoCierreSeleccionado('litigio')}
                   >
                     <ShieldAlert className="h-4 w-4" />
-                    Declarar Litigio / Incumplimiento
+                    Declarar Controversia / Incumplimiento
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle className="flex items-center gap-2">
                       <AlertTriangle className="h-5 w-5 text-destructive" />
-                      ¿Declarar estado de litigio?
+                      ¿Declarar estado de controversia?
                     </AlertDialogTitle>
                     <AlertDialogDescription className="space-y-3">
                       <p>Esta acción es <strong>irreversible</strong> y tendrá los siguientes efectos:</p>
                       <ul className="list-disc list-inside space-y-1 text-sm">
-                        <li>El estado del contrato cambiará a <strong>LITIGIO</strong></li>
+                        <li>El estado del contrato cambiará a <strong>CONTROVERSIA</strong></li>
                         <li>Se bloquearán todas las capacidades de edición</li>
                         <li>Se generará automáticamente el paquete de evidencias forenses</li>
                       </ul>
@@ -240,7 +240,7 @@ export const ResolucionCierrePanel = () => {
                       className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                       disabled={procesando}
                     >
-                      {procesando ? "Generando evidencias..." : "Confirmar Litigio"}
+                      {procesando ? "Generando evidencias..." : "Confirmar Controversia"}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -334,9 +334,9 @@ export const ResolucionCierrePanel = () => {
                   <td className="py-2">Registro de Condiciones</td>
                 </tr>
                 <tr>
-                  <td className="py-2">Litigio</td>
+                  <td className="py-2">Controversia</td>
                   <td className="py-2">Contencioso</td>
-                  <td className="py-2"><Badge variant="destructive">LITIGIO</Badge></td>
+                  <td className="py-2"><Badge variant="destructive">CONTROVERSIA</Badge></td>
                   <td className="py-2">Certificado QTSP Completo</td>
                 </tr>
               </tbody>
