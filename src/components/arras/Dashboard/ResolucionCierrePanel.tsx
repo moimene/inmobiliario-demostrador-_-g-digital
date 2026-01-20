@@ -24,7 +24,8 @@ import {
   Lock,
   Download,
   CheckCircle2,
-  XCircle
+  XCircle,
+  ExternalLink
 } from "lucide-react";
 import { toast } from "sonner";
 import { generarCertificadoQTSP } from "@/utils/generarCertificadoQTSP";
@@ -123,13 +124,26 @@ export const ResolucionCierrePanel = () => {
       {/* Header */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Scale className="h-5 w-5 text-primary" />
-            Panel de Resolución y Cierre
-          </CardTitle>
-          <CardDescription>
-            Gestione la finalización del contrato fuera del cauce ordinario (escritura pública notarial)
-          </CardDescription>
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Scale className="h-5 w-5 text-primary" />
+                Panel de Resolución y Cierre
+              </CardTitle>
+              <CardDescription>
+                Gestione la finalización del contrato fuera del cauce ordinario (escritura pública notarial)
+              </CardDescription>
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="gap-2 shrink-0"
+              onClick={() => window.open('https://www.comillas.edu/investigacion/observatorio-legaltech/foro-ktech/', '_blank')}
+            >
+              <ExternalLink className="h-4 w-4" />
+              Estándar Observatorio ICADE-Garrigues
+            </Button>
+          </div>
         </CardHeader>
       </Card>
 
