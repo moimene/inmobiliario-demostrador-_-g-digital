@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, ChevronDown, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import eadTrustLogo from "@/assets/ead-trust-logo.png";
-import eidasBadge from "@/assets/eidas-badge-hero.jpeg";
+import heroMarketplace from "@/assets/hero-marketplace.png";
 export const Hero = () => {
   const navigate = useNavigate();
   const scrollToDemos = () => {
@@ -78,8 +78,8 @@ export const Hero = () => {
 
         {/* Columna derecha: Elemento visual */}
         <div className="flex justify-center">
-          <div className="w-full max-w-md p-12 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl border-2 border-primary/10">
-            <img src={eidasBadge} alt="Sello eIDAS" className="w-full h-full object-contain" />
+          <div className="w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border border-primary/10">
+            <img src={heroMarketplace} alt="Marketplace inmobiliario certificado" className="w-full h-full object-cover" />
           </div>
         </div>
 
