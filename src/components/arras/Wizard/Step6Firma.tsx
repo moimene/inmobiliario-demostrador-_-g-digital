@@ -26,6 +26,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { useArras } from "@/contexts/ArrasContext";
 import { generarCertificadoFirmasPDF } from "@/utils/generarCertificadoFirmasPDF";
+import { toast } from "@/hooks/use-toast";
 import eadTrustLogo from "@/assets/ead-trust-logo.png";
 import selloEidas from "@/assets/sello_eidas.png";
 
@@ -81,6 +82,7 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
 
   const handleInvitarFirma = async (firmanteId: string) => {
     setIsInviting(firmanteId);
+    const firmante = firmantes.find(f => f.id === firmanteId);
     
     // Simulate API call to EADTrust
     await new Promise(resolve => setTimeout(resolve, 1500));
@@ -96,9 +98,29 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
         : f
     ));
     setIsInviting(null);
+
+    // Simulated email notification
+    toast({
+      title: "📧 Email de invitación enviado",
+      description: (
+        <div className="mt-2 space-y-2 text-sm">
+          <p><strong>Para:</strong> {firmante?.email}</p>
+          <p><strong>Asunto:</strong> Invitación a firmar contrato de arras</p>
+          <div className="p-2 bg-muted rounded text-xs mt-2">
+            <p>Estimado/a {firmante?.nombre},</p>
+            <p className="mt-1">Ha sido invitado a firmar un contrato de arras penitenciales mediante firma electrónica cualificada.</p>
+            <p className="mt-1">Acceda al enlace seguro para verificar su identidad y proceder con la firma.</p>
+            <p className="mt-2 text-primary">[Enlace de firma seguro - EADTrust]</p>
+          </div>
+        </div>
+      ),
+      duration: 8000,
+    });
   };
 
   const handleSimularFirma = async (firmanteId: string) => {
+    const firmante = firmantes.find(f => f.id === firmanteId);
+    
     setFirmantes(prev => prev.map(f => 
       f.id === firmanteId ? { ...f, estado: "verificando" } : f
     ));
@@ -106,16 +128,64 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
     // Simulate verification process
     await new Promise(resolve => setTimeout(resolve, 2000));
     
+    const hashFirma = `SHA256:${crypto.randomUUID().replace(/-/g, '').substring(0, 64)}`;
+    const timestampFirma = new Date().toISOString();
+    
     setFirmantes(prev => prev.map(f => 
       f.id === firmanteId 
         ? { 
             ...f, 
             estado: "firmado",
-            timestampFirma: new Date().toISOString(),
-            hashFirma: `SHA256:${crypto.randomUUID().replace(/-/g, '').substring(0, 64)}`
+            timestampFirma,
+            hashFirma
           } 
         : f
     ));
+
+    // Simulated confirmation email to signer
+    toast({
+      title: "✅ Firma completada - Email de confirmación enviado",
+      description: (
+        <div className="mt-2 space-y-2 text-sm">
+          <p><strong>Para:</strong> {firmante?.email}</p>
+          <p><strong>Asunto:</strong> Confirmación de firma electrónica cualificada</p>
+          <div className="p-2 bg-green-50 rounded text-xs mt-2 border border-green-200">
+            <p>Estimado/a {firmante?.nombre},</p>
+            <p className="mt-1">Su firma electrónica cualificada ha sido registrada correctamente.</p>
+            <p className="mt-1 font-mono text-[10px] break-all">Hash: {hashFirma}</p>
+            <p className="mt-1">Timestamp: {new Date(timestampFirma).toLocaleString("es-ES")}</p>
+            <p className="mt-2">Recibirá el documento firmado una vez todas las partes completen la firma.</p>
+          </div>
+        </div>
+      ),
+      duration: 8000,
+    });
+
+    // Check if all have signed after this one
+    const updatedFirmantes = firmantes.map(f => 
+      f.id === firmanteId ? { ...f, estado: "firmado" as const } : f
+    );
+    
+    if (updatedFirmantes.every(f => f.estado === "firmado")) {
+      // Delay the "all signed" notification
+      setTimeout(() => {
+        toast({
+          title: "🎉 Todas las firmas completadas",
+          description: (
+            <div className="mt-2 space-y-2 text-sm">
+              <p><strong>Notificación enviada a todas las partes</strong></p>
+              <div className="p-2 bg-primary/5 rounded text-xs mt-2 border">
+                <p>El contrato ha sido firmado por todas las partes.</p>
+                <p className="mt-1">Se ha generado el documento final con todas las firmas y sellos temporales cualificados.</p>
+                <p className="mt-2 text-primary font-medium">📎 Adjunto: Contrato firmado + Certificado de evidencias</p>
+              </div>
+            </div>
+          ),
+          duration: 10000,
+        });
+      }, 1500);
+    }
+  };
   };
 
   const todosHanFirmado = firmantes.every(f => f.estado === "firmado");
