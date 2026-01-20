@@ -1,6 +1,7 @@
-import { Car, Shield, ExternalLink } from "lucide-react";
+import { Shield, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import gocertiusHero from "@/assets/gocertius-hero.png";
 
 export const EcosistemaSection = () => {
   const handleNavigateExternal = (url: string) => {
@@ -52,8 +53,17 @@ export const EcosistemaSection = () => {
           {productosEcosistema.map((product) => (
             <Card
               key={product.name}
-              className={`group hover:shadow-xl transition-all border-2 border-muted ${product.borderHover} shadow-lg`}
+              className={`group hover:shadow-xl transition-all border-2 border-muted ${product.borderHover} shadow-lg overflow-hidden`}
             >
+              {/* Imagen de GoCertius */}
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={gocertiusHero} 
+                  alt="GoCertius - Pruebas electrónicas certificadas" 
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              </div>
               <CardHeader className="p-8">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-5">
