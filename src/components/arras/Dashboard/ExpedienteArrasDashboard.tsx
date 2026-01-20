@@ -7,6 +7,7 @@ import { InventarioDocumental } from "./InventarioDocumental";
 import { ComunicacionesEstructuradas } from "./ComunicacionesEstructuradas";
 import { NotariaGestion } from "./NotariaGestion";
 import { CertificadoEventos } from "./CertificadoEventos";
+import { ResolucionCierrePanel } from "./ResolucionCierrePanel";
 import { faseLabelsArras } from "@/data/arrasBotFlow";
 
 export const ExpedienteArrasDashboard = () => {
@@ -62,11 +63,12 @@ export const ExpedienteArrasDashboard = () => {
                 {/* Right Column: Workflows */}
                 <div className="lg:col-span-2">
                     <Tabs defaultValue="gestion" className="w-full">
-                        <TabsList className="grid w-full grid-cols-4">
+                        <TabsList className="grid w-full grid-cols-5">
                             <TabsTrigger value="gestion">Gestión</TabsTrigger>
                             <TabsTrigger value="docs">Documentos</TabsTrigger>
                             <TabsTrigger value="comms">Comunicaciones</TabsTrigger>
                             <TabsTrigger value="notaria">Notaría</TabsTrigger>
+                            <TabsTrigger value="resolucion">Resolución</TabsTrigger>
                         </TabsList>
 
                         <TabsContent value="gestion" className="mt-6">
@@ -83,6 +85,10 @@ export const ExpedienteArrasDashboard = () => {
 
                         <TabsContent value="notaria" className="mt-6">
                             <NotariaGestion />
+                        </TabsContent>
+
+                        <TabsContent value="resolucion" className="mt-6">
+                            <ResolucionCierrePanel />
                         </TabsContent>
                     </Tabs>
                 </div>
