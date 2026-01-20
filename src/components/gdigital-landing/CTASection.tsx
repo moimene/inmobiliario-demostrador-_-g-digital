@@ -35,14 +35,14 @@ export const CTASection: React.FC = () => {
           </motion.div>
 
           {/* Headline */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-normal mb-6">
             <span className="text-white">Lleve su organización a la </span>
             <span className="bg-gradient-to-r from-gdigital-green to-gdigital-lime bg-clip-text text-transparent">
               vanguardia de la confianza digital
             </span>
           </h2>
 
-          <p className="text-lg text-white/70 max-w-2xl mx-auto mb-10">
+          <p className="text-lg text-white/70 max-w-2xl mx-auto mb-10 font-light">
             Conéctese con nuestro equipo de expertos legales y tecnológicos para explorar cómo g-digital puede transformar sus procesos.
           </p>
 

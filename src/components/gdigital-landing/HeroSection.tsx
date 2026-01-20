@@ -57,7 +57,7 @@ export const HeroSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold leading-tight mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-medium leading-tight mb-6"
           >
             <span className="text-white">Transformamos el derecho en </span>
             <span className="bg-gradient-to-r from-gdigital-green to-gdigital-lime bg-clip-text text-transparent">
@@ -75,7 +75,7 @@ export const HeroSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-lg md:text-xl text-white/70 max-w-4xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-white/70 max-w-4xl mx-auto leading-relaxed font-light"
           >
             Combinamos el conocimiento legal de Garrigues con tecnología punta para 
             <span className="text-gdigital-green font-medium"> digitalizar la confianza</span>, 

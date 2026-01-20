@@ -98,13 +98,13 @@ export const SolutionsSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-normal mb-4">
             <span className="text-white">Nuestras </span>
             <span className="bg-gradient-to-r from-gdigital-green to-gdigital-lime bg-clip-text text-transparent">
               4 Líneas de Soluciones
             </span>
           </h2>
-          <p className="text-lg text-white/70 max-w-3xl mx-auto">
+          <p className="text-lg text-white/70 max-w-3xl mx-auto font-light">
             Estructuramos nuestra oferta en cuatro ejes estratégicos interconectados para cubrir todas las necesidades de la economía digital.
           </p>
         </motion.div>
@@ -131,12 +131,12 @@ export const SolutionsSection: React.FC = () => {
                         <div className="text-xs text-gdigital-lime uppercase tracking-wider mb-1">
                           {solution.subtitle}
                         </div>
-                        <h3 className="text-2xl font-heading font-bold text-white">
+                        <h3 className="text-2xl font-heading font-normal text-white">
                           {solution.title}
                         </h3>
                       </div>
                     </div>
-                    <p className="text-white/70 leading-relaxed">
+                    <p className="text-white/70 leading-relaxed font-light">
                       {solution.description}
                     </p>
                   </div>
@@ -157,7 +157,7 @@ export const SolutionsSection: React.FC = () => {
                             <feature.icon className="w-5 h-5 text-gdigital-green" />
                           </div>
                           <div>
-                            <h4 className="font-medium text-white mb-1">{feature.title}</h4>
+                            <h4 className="font-normal text-white mb-1">{feature.title}</h4>
                             <p className="text-sm text-white/60">{feature.description}</p>
                           </div>
                         </motion.div>

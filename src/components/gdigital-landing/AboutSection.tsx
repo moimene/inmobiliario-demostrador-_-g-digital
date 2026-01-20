@@ -25,28 +25,28 @@ export const AboutSection: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-heading font-normal mb-6">
               <span className="text-white">¿Quiénes </span>
               <span className="bg-gradient-to-r from-gdigital-green to-gdigital-lime bg-clip-text text-transparent">
                 somos?
               </span>
             </h2>
 
-            <div className="space-y-5 text-white/80 leading-relaxed">
+            <div className="space-y-5 text-white/80 leading-relaxed font-light">
               <p>
-                <span className="text-gdigital-green font-semibold">g-digital</span> es la división de innovación y negocio digital del 
-                <span className="text-white font-medium"> Grupo Garrigues</span>. No somos solo un proveedor de software; somos una 
-                <span className="text-gdigital-lime font-medium"> factoría de LegalTech</span> que integra ingeniería tecnológica y dirección jurídica para crear productos y servicios innovadores.
+                <span className="text-gdigital-green">g-digital</span> es la división de innovación y negocio digital del 
+                <span className="text-white"> Grupo Garrigues</span>. No somos solo un proveedor de software; somos una 
+                <span className="text-gdigital-lime"> factoría de LegalTech</span> que integra ingeniería tecnológica y dirección jurídica para crear productos y servicios innovadores.
               </p>
 
               <p>
-                Nuestra misión es liderar la era del <span className="text-gdigital-green font-semibold">Derecho Computable</span>, 
+                Nuestra misión es liderar la era del <span className="text-gdigital-green">Derecho Computable</span>, 
                 convirtiendo procesos legales complejos en sistemas digitales eficientes y seguros.
               </p>
 
               <p>
-                Operamos bajo un modelo único donde la <span className="text-white font-medium">seguridad jurídica</span> y el 
-                <span className="text-white font-medium"> cumplimiento normativo</span> se integran desde el diseño 
+                Operamos bajo un modelo único donde la <span className="text-white">seguridad jurídica</span> y el 
+                <span className="text-white"> cumplimiento normativo</span> se integran desde el diseño 
                 <span className="text-gdigital-lime"> (compliance by design)</span>.
               </p>
             </div>
@@ -73,7 +73,7 @@ export const AboutSection: React.FC = () => {
                     <div className="w-12 h-12 rounded-lg bg-gdigital-green/10 flex items-center justify-center">
                       <item.icon className="w-6 h-6 text-gdigital-green" />
                     </div>
-                    <span className="text-white font-medium">{item.text}</span>
+                    <span className="text-white font-normal">{item.text}</span>
                   </motion.div>
                 ))}
               </div>
@@ -83,7 +83,7 @@ export const AboutSection: React.FC = () => {
                 <span className="text-sm text-white/60">
                   Respaldados por más de
                 </span>
-                <div className="text-3xl font-heading font-bold mt-2">
+                <div className="text-3xl font-heading font-normal mt-2">
                   <span className="bg-gradient-to-r from-gdigital-green to-gdigital-lime bg-clip-text text-transparent">
                     80+ años
                   </span>

@@ -48,13 +48,13 @@ export const ValuePropositionSection: React.FC = () => {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-normal mb-4">
             <span className="text-white">Metodología </span>
             <span className="bg-gradient-to-r from-gdigital-green to-gdigital-lime bg-clip-text text-transparent">
               "Garrigues Modo Cero"
             </span>
           </h2>
-          <p className="text-lg text-white/70 max-w-3xl mx-auto">
+          <p className="text-lg text-white/70 max-w-3xl mx-auto font-light">
             Lo que nos distingue en el mercado es nuestro modelo único de desarrollo e innovación.
           </p>
         </motion.div>
@@ -81,12 +81,12 @@ export const ValuePropositionSection: React.FC = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-heading font-bold text-white mb-4">
+                <h3 className="text-xl font-heading font-normal text-white mb-4">
                   {prop.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-white/70 leading-relaxed">
+                <p className="text-white/70 leading-relaxed font-light">
                   {prop.description}
                 </p>
               </GlowCard>
