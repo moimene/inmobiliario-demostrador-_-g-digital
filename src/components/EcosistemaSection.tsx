@@ -48,45 +48,45 @@ export const EcosistemaSection = () => {
 
         {/* Grid de productos del ecosistema */}
         <div className="flex justify-center">
-          <div className="max-w-lg w-full">
+          <div className="max-w-2xl w-full">
           {productosEcosistema.map((product) => (
             <Card
               key={product.name}
-              className={`group hover:shadow-lg transition-all border-2 border-muted ${product.borderHover}`}
+              className={`group hover:shadow-xl transition-all border-2 border-muted ${product.borderHover} shadow-lg`}
             >
-              <CardHeader>
+              <CardHeader className="p-8">
                 <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-16 h-16 rounded-xl ${product.bgIcon} flex items-center justify-center transition-all group-hover:scale-110`}>
-                      <product.icon className={`h-8 w-8 ${product.textIcon}`} />
+                  <div className="flex items-center gap-5">
+                    <div className={`w-20 h-20 rounded-xl ${product.bgIcon} flex items-center justify-center transition-all group-hover:scale-110`}>
+                      <product.icon className={`h-10 w-10 ${product.textIcon}`} />
                     </div>
                     <div>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <CardTitle className="text-2xl">{product.name}</CardTitle>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <CardTitle className="text-3xl">{product.name}</CardTitle>
                         {product.badge && (
-                          <div className="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-md">
-                            <span className="text-xs font-semibold text-primary">{product.badge}</span>
+                          <div className="inline-flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-md">
+                            <span className="text-sm font-semibold text-primary">{product.badge}</span>
                           </div>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="text-base text-muted-foreground mt-2">
                         {product.sector}
                       </p>
                     </div>
                   </div>
-                  <ExternalLink className={`h-5 w-5 text-muted-foreground group-hover:${product.textIcon} transition-colors`} />
+                  <ExternalLink className={`h-6 w-6 text-muted-foreground group-hover:${product.textIcon} transition-colors`} />
                 </div>
               </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base mb-6">
+              <CardContent className="px-8 pb-8">
+                <CardDescription className="text-lg mb-8 leading-relaxed">
                   {product.description}
                 </CardDescription>
 
                 {/* Features destacados */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="grid grid-cols-2 gap-4 mb-8">
                   {product.features.map((feature) => (
-                    <div key={feature} className="flex items-center gap-2 text-sm">
-                      <span className="h-1.5 w-1.5 bg-trust-green rounded-full" />
+                    <div key={feature} className="flex items-center gap-3 text-base">
+                      <span className="h-2 w-2 bg-trust-green rounded-full" />
                       <span className="text-foreground/80">{feature}</span>
                     </div>
                   ))}
@@ -94,10 +94,10 @@ export const EcosistemaSection = () => {
 
                 <Button
                   onClick={() => handleNavigateExternal(product.url)}
-                  className={`w-full ${product.bgButton} text-white transition-all group-hover:scale-[1.02]`}
+                  className={`w-full ${product.bgButton} text-white transition-all group-hover:scale-[1.02] py-6 text-lg`}
                 >
                   Acceder a {product.name}
-                  <ExternalLink className="ml-2 h-4 w-4" />
+                  <ExternalLink className="ml-2 h-5 w-5" />
                 </Button>
               </CardContent>
             </Card>
