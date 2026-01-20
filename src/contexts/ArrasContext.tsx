@@ -7,7 +7,12 @@ import {
   FaseArras,
   ArrasRol,
   Documento,
-  MensajeArras
+  MensajeArras,
+  Comunicacion,
+  EstadoContrato,
+  Mandato,
+  EstadoDocumento,
+  TipoRolUsuario,
 } from "@/types/arras";
 import { expedienteArrasMock, contratosArrasMock } from "@/data/arrasMockData";
 
@@ -22,7 +27,13 @@ export const ArrasProvider = ({ children }: { children: ReactNode }) => {
     contratoSeleccionado: expedienteArrasMock.id,
   });
 
-  // Set Chrono-Flare phase (new architecture)
+  const setEstado = (estado: EstadoContrato) => {
+    setState(prev => ({
+      ...prev,
+      expediente: { ...prev.expediente, estado }
+    }));
+  };
+
   const setFase = (fase: ArrasFase) => {
     setState(prev => ({
       ...prev,
@@ -30,7 +41,6 @@ export const ArrasProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
-  // Change Bot Flow phase (legacy - used by components)
   const cambiarFase = (fase: FaseArras) => {
     setState(prev => ({
       ...prev,
@@ -49,40 +59,30 @@ export const ArrasProvider = ({ children }: { children: ReactNode }) => {
     setState(prev => ({ ...prev, usuarioActual: rol }));
   };
 
-  // Add communication (Chrono-Flare style)
-  const addComunicacion = (msg: string, adjuntos?: Documento[]) => {
-    const nuevoMensaje: MensajeArras = {
-      id: `msg-${Date.now()}`,
-      tipo: "usuario",
-      remitente: state.usuarioActual as string,
-      texto: msg,
-      timestamp: new Date().toISOString(),
-      certificado: true,
-      hash: `hash-${Date.now().toString(16)}`,
-      leido: false,
-      adjuntos: adjuntos?.map(d => ({
-        tipo: d.tipo,
-        nombre: d.nombre,
-        url: d.url,
-        hash: d.hash,
-      })),
-    };
+  const setMandato = (mandato: Mandato | undefined) => {
+    setState(prev => ({ ...prev, mandatoActivo: mandato }));
+  };
 
+  const addComunicacion = (comunicacion: Omit<Comunicacion, "id" | "timestamp" | "evidencia">) => {
+    const nuevaCom: Comunicacion = {
+      ...comunicacion,
+      id: `com-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      evidencia: {
+        hash: `hash-${Date.now().toString(16)}`,
+        tsa: `TSA-${Date.now()}`,
+        selloId: `sello-${Date.now()}`,
+      },
+    };
     setState(prev => ({
       ...prev,
       expediente: {
         ...prev.expediente,
-        mensajes: [...prev.expediente.mensajes, nuevoMensaje]
+        comunicaciones: [...(prev.expediente.comunicaciones || []), nuevaCom],
       },
-      contratos: prev.contratos.map(c => 
-        c.id === prev.contratoSeleccionado 
-          ? { ...c, mensajes: [...c.mensajes, nuevoMensaje] }
-          : c
-      )
     }));
   };
 
-  // Send message (legacy style - used by ChatInput and ChatActions)
   const enviarMensaje = (msg: Partial<MensajeArras>) => {
     const nuevoMensaje: MensajeArras = {
       id: `msg-${Date.now()}`,
@@ -95,50 +95,65 @@ export const ArrasProvider = ({ children }: { children: ReactNode }) => {
       leido: false,
       adjuntos: msg.adjuntos,
     };
-
     setState(prev => ({
       ...prev,
       expediente: {
         ...prev.expediente,
         mensajes: [...prev.expediente.mensajes, nuevoMensaje]
       },
-      contratos: prev.contratos.map(c => 
-        c.id === prev.contratoSeleccionado 
-          ? { ...c, mensajes: [...c.mensajes, nuevoMensaje] }
-          : c
-      )
     }));
   };
 
-  // Confirm message (used by ChatActions)
   const confirmarMensaje = (msgId: string, rol: string) => {
     setState(prev => ({
       ...prev,
       expediente: {
         ...prev.expediente,
         mensajes: prev.expediente.mensajes.map(m =>
-          m.id === msgId
-            ? { ...m, confirmadoPor: [...(m.confirmadoPor || []), rol] }
-            : m
+          m.id === msgId ? { ...m, confirmadoPor: [...(m.confirmadoPor || []), rol] } : m
         )
       },
-      contratos: prev.contratos.map(c => 
-        c.id === prev.contratoSeleccionado 
-          ? {
-              ...c,
-              mensajes: c.mensajes.map(m =>
-                m.id === msgId
-                  ? { ...m, confirmadoPor: [...(m.confirmadoPor || []), rol] }
-                  : m
-              )
-            }
-          : c
-      )
     }));
   };
 
   const uploadDocumento = (doc: Omit<Documento, "id" | "timestamp" | "hash" | "estado">) => {
     console.log("Uploading document:", doc);
+  };
+
+  const actualizarItemInventario = (itemId: string, estado: EstadoDocumento, archivoId?: string) => {
+    setState(prev => ({
+      ...prev,
+      expediente: {
+        ...prev.expediente,
+        inventarioDocumental: prev.expediente.inventarioDocumental.map(item =>
+          item.id === itemId ? { ...item, estado, archivoId } : item
+        )
+      },
+    }));
+  };
+
+  const validarDocumento = (itemId: string, validadoPor: string) => {
+    actualizarItemInventario(itemId, "VALIDADO");
+  };
+
+  const rechazarDocumento = (itemId: string, motivo: string) => {
+    setState(prev => ({
+      ...prev,
+      expediente: {
+        ...prev.expediente,
+        inventarioDocumental: prev.expediente.inventarioDocumental.map(item =>
+          item.id === itemId ? { ...item, estado: "RECHAZADO" as EstadoDocumento, motivoRechazo: motivo } : item
+        )
+      },
+    }));
+  };
+
+  const firmarContrato = (rol: TipoRolUsuario) => {
+    console.log("Firmando como:", rol);
+  };
+
+  const ratificarDocumento = (documentoId: string, rol: TipoRolUsuario) => {
+    console.log("Ratificando:", documentoId, rol);
   };
 
   const seleccionarContrato = (id: string) => {
@@ -152,23 +167,35 @@ export const ArrasProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const loadExpediente = (id: string) => {
-    seleccionarContrato(id);
-  };
+  const loadExpediente = (id: string) => seleccionarContrato(id);
+
+  const puedeTransicionar = (nuevoEstado: EstadoContrato) => true;
+
+  const getDocumentosFaltantes = () => 
+    state.expediente.inventarioDocumental.filter(d => d.estado === "PENDIENTE");
 
   return (
     <ArrasContext.Provider value={{
       ...state,
+      setEstado,
       setFase,
       cambiarFase,
       setUsuario,
+      setMandato,
       setVista,
       addComunicacion,
       enviarMensaje,
       confirmarMensaje,
       uploadDocumento,
+      actualizarItemInventario,
+      validarDocumento,
+      rechazarDocumento,
+      firmarContrato,
+      ratificarDocumento,
       seleccionarContrato,
-      loadExpediente
+      loadExpediente,
+      puedeTransicionar,
+      getDocumentosFaltantes,
     }}>
       {children}
     </ArrasContext.Provider>
@@ -177,8 +204,6 @@ export const ArrasProvider = ({ children }: { children: ReactNode }) => {
 
 export const useArras = () => {
   const context = useContext(ArrasContext);
-  if (!context) {
-    throw new Error("useArras must be used within an ArrasProvider");
-  }
+  if (!context) throw new Error("useArras must be used within an ArrasProvider");
   return context;
 };

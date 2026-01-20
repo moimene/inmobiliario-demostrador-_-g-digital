@@ -23,8 +23,8 @@ export const ComunicacionesEstructuradas = ({ mensajes }: Props) => {
                             </p>
                         ) : (
                             mensajes.map((msg) => (
-                                <div key={msg.id} className={`flex ${msg.remitente === 'vendedor' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[80%] rounded-lg p-3 ${msg.remitente === 'vendedor'
+                            <div key={msg.id} className={`flex ${msg.remitente === 'VENDEDOR' ? 'justify-end' : 'justify-start'}`}>
+                                    <div className={`max-w-[80%] rounded-lg p-3 ${msg.remitente === 'VENDEDOR'
                                             ? 'bg-primary text-primary-foreground'
                                             : 'bg-muted'
                                         }`}>

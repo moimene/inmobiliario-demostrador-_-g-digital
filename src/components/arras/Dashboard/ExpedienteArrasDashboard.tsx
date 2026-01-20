@@ -74,7 +74,7 @@ export const ExpedienteArrasDashboard = () => {
                         </TabsContent>
 
                         <TabsContent value="docs" className="mt-6">
-                            <InventarioDocumental documentos={expediente.inventarioDocumental || []} />
+                            <InventarioDocumental inventario={expediente.inventarioDocumental || []} />
                         </TabsContent>
 
                         <TabsContent value="comms" className="mt-6">
