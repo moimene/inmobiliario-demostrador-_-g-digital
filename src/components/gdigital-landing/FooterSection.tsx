@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { GDigitalLogo } from '@/components/deck/GDigitalLogo';
 
 export const FooterSection: React.FC = () => {
@@ -37,9 +38,15 @@ export const FooterSection: React.FC = () => {
             </a>
           </div>
 
-          {/* Copyright */}
-          <div className="text-sm text-white/40">
-            © {new Date().getFullYear()} G-digital · Grupo Garrigues
+          {/* Copyright & Legal */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-white/40">
+            <span>© {new Date().getFullYear()} g-digital · Grupo Garrigues</span>
+            <Link 
+              to="/aviso-legal" 
+              className="text-white/60 hover:text-gdigital-green transition-colors"
+            >
+              Aviso Legal
+            </Link>
           </div>
         </div>
       </div>
