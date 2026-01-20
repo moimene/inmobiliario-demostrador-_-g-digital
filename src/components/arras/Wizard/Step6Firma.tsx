@@ -19,10 +19,13 @@ import {
   Phone,
   Smartphone,
   Lock,
-  ExternalLink
+  ExternalLink,
+  Download,
+  Award
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useArras } from "@/contexts/ArrasContext";
+import { generarCertificadoFirmasPDF } from "@/utils/generarCertificadoFirmasPDF";
 import eadTrustLogo from "@/assets/ead-trust-logo.png";
 import selloEidas from "@/assets/sello_eidas.png";
 
@@ -117,6 +120,22 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
 
   const todosHanFirmado = firmantes.every(f => f.estado === "firmado");
   const algunoHaFirmado = firmantes.some(f => f.estado === "firmado");
+
+  const handleDescargarCertificado = () => {
+    const datosContrato = {
+      idExpediente: `EXP-${Date.now().toString(36).toUpperCase()}`,
+      tituloContrato: "Contrato de Arras Penitenciales - Estándar Observatorio Legaltech",
+      hashDocumento: `SHA256:${crypto.randomUUID().replace(/-/g, '')}${crypto.randomUUID().replace(/-/g, '').substring(0, 32)}`,
+      timestampCreacion: new Date().toISOString(),
+      inmueble: {
+        direccion: "Calle Gran Vía 45, 3º A, 28013 Madrid",
+        referenciaCatastral: "9872301VK4797S0001WX"
+      },
+      importeArras: 25000
+    };
+    
+    generarCertificadoFirmasPDF(firmantes, datosContrato);
+  };
 
   const handleFinish = () => {
     onNext({ ...data, firmantes });
@@ -389,14 +408,15 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
 
           {/* Aviso cuando todos han firmado */}
           <AnimatePresence>
-            {todosHanFirmado && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <Card className="border-green-300 bg-green-50">
-                  <CardContent className="p-4">
+          {todosHanFirmado && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <Card className="border-green-300 bg-green-50">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <div className="p-2 rounded-full bg-green-600 text-white">
                         <CheckCircle className="h-6 w-6" />
@@ -408,6 +428,14 @@ export const Step6Firma = ({ onNext, onBack, data }: StepProps) => {
                         </p>
                       </div>
                     </div>
+                    <Button 
+                      onClick={handleDescargarCertificado}
+                      className="gap-2 bg-green-700 hover:bg-green-800"
+                    >
+                      <Award className="h-4 w-4" />
+                      Descargar Certificado
+                    </Button>
+                  </div>
                   </CardContent>
                 </Card>
               </motion.div>
