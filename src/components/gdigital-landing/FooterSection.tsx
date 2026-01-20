@@ -12,12 +12,12 @@ export const FooterSection: React.FC = () => {
           {/* Links */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
             <a 
-              href="https://www.g-digital.garrigues.com/" 
+              href="https://g-digital.garrigues.com/es_ES/nosotros" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-gdigital-green transition-colors"
             >
-              Portal G-digital
+              Portal g-digital
             </a>
             <a 
               href="https://www.garrigues.com/" 
