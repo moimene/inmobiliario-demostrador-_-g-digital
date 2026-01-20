@@ -1,8 +1,10 @@
 import { Shield, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import gocertiusHero from "@/assets/gocertius-hero.png";
-
+import eidasLogo from "@/assets/sello_eidas.png";
+import eadTrustLogo from "@/assets/ead-trust-logo.png";
 export const EcosistemaSection = () => {
   const handleNavigateExternal = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -63,6 +65,25 @@ export const EcosistemaSection = () => {
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              </div>
+              
+              {/* Badges de certificación */}
+              <div className="flex items-center justify-center gap-4 py-4 px-6 bg-muted/50 border-b border-muted">
+                <div className="flex items-center gap-2">
+                  <img src={eidasLogo} alt="eIDAS Certified" className="h-8 w-auto" />
+                  <span className="text-xs font-medium text-muted-foreground">eIDAS Qualified</span>
+                </div>
+                <div className="h-6 w-px bg-border" />
+                <div className="flex items-center gap-2">
+                  <img src={eadTrustLogo} alt="EAD Trust" className="h-6 w-auto" />
+                  <span className="text-xs font-medium text-muted-foreground">QTSP</span>
+                </div>
+                <div className="h-6 w-px bg-border" />
+                <div className="flex items-center gap-1">
+                  <Badge variant="outline" className="text-xs bg-background">
+                    🇪🇸 Gobierno de España
+                  </Badge>
+                </div>
               </div>
               <CardHeader className="p-8">
                 <div className="flex items-start justify-between">
