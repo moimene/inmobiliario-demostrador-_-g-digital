@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PenTool } from "lucide-react";
 import { HistorialNotificaciones } from "./HistorialNotificaciones";
 import { AccionesRapidasPanel } from "./AccionesRapidasPanel";
+import eidasIcon from "@/assets/eidas-icon.png";
 
 export const FirmasRatificaciones = () => {
   return (
@@ -10,8 +11,13 @@ export const FirmasRatificaciones = () => {
       {/* Firmas Pendientes */}
       <Card>
         <CardHeader>
-          <CardTitle>Firmas Pendientes</CardTitle>
-          <CardDescription>Documentos que requieren tu atención</CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Firmas Pendientes</CardTitle>
+              <CardDescription>Documentos que requieren tu atención</CardDescription>
+            </div>
+            <img src={eidasIcon} alt="eIDAS Certified" className="h-10 w-auto" />
+          </div>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between p-4 border rounded-lg bg-background">

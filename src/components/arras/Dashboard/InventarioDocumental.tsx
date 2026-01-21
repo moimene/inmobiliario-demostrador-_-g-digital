@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ItemInventario, CategoriaDocumento, BLOQUES_INVENTARIO } from "@/types/arras";
 import { FileText, Download, ShieldCheck, Clock, XCircle, Upload } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import eidasIcon from "@/assets/eidas-icon.png";
 
 interface Props {
     inventario: ItemInventario[];
@@ -35,12 +36,15 @@ export const InventarioDocumental = ({ inventario }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                    <span>Inventario Documental</span>
-                    <Badge variant="outline" className="text-xs">
-                        {validados}/{totalDocs} Validados
-                    </Badge>
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-4">
+                        <span>Inventario Documental</span>
+                        <Badge variant="outline" className="text-xs">
+                            {validados}/{totalDocs} Validados
+                        </Badge>
+                    </CardTitle>
+                    <img src={eidasIcon} alt="eIDAS" className="h-10 w-auto" />
+                </div>
             </CardHeader>
             <CardContent>
                 {inventario.length === 0 ? (
