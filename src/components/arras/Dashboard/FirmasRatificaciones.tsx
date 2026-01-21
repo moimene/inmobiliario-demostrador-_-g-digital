@@ -1,10 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PenTool } from "lucide-react";
-
 export const FirmasRatificaciones = () => {
-    return (
-        <div className="space-y-6">
+  return <div className="space-y-6">
             <Card>
                 <CardHeader>
                     <CardTitle>Firmas Pendientes</CardTitle>
@@ -26,16 +24,6 @@ export const FirmasRatificaciones = () => {
                 </CardContent>
             </Card>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Historial de Ratificaciones</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-sm text-muted-foreground text-center py-4">
-                        No hay ratificaciones registradas.
-                    </p>
-                </CardContent>
-            </Card>
-        </div>
-    );
+            
+        </div>;
 };
