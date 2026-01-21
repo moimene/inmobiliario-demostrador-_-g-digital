@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PROFILES, DEPTHS } from "@/constants/arras-chat";
 import { UserProfile, DepthLevel } from "@/types/chat-assistant";
-import { CheckCircle2, Scale, Sparkles } from "lucide-react";
-import eidasIcon from "@/assets/eidas-icon.png";
+import { CheckCircle2, HelpCircle, Sparkles } from "lucide-react";
 
 interface Props {
   onComplete: (profile: UserProfile, depth: DepthLevel) => void;
@@ -28,38 +27,34 @@ export const ArrasAssistantOnboarding = ({ onComplete }: Props) => {
   };
 
   return (
-    <div className="h-full flex flex-col p-4 bg-gradient-to-b from-primary/5 to-background">
-      <div className="flex items-center justify-center gap-3 mb-6">
-        <Scale className="h-8 w-8 text-primary" />
-        <div>
-          <h2 className="text-xl font-bold">Asistente Legal de Arras</h2>
-          <p className="text-sm text-muted-foreground">Experto en contratos inmobiliarios</p>
+    <div className="p-4 bg-gradient-to-b from-primary/5 to-background">
+      <div className="flex items-center justify-center gap-3 mb-4">
+        <HelpCircle className="h-7 w-7 text-primary" />
+        <div className="text-center">
+          <h2 className="text-lg font-bold">Asistente de Soporte</h2>
+          <p className="text-xs text-muted-foreground">Canal de Arras GDigital</p>
         </div>
-        <img src={eidasIcon} alt="eIDAS" className="h-10" />
       </div>
 
       {step === 1 && (
-        <Card className="flex-1 border-2 border-primary/20">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-accent" />
+        <Card className="border border-primary/20">
+          <CardHeader className="py-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-accent" />
               ¿Cuál es tu perfil?
             </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Adaptaré mis respuestas a tus necesidades
-            </p>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-2 py-2">
             {PROFILES.map((profile) => (
               <Button
                 key={profile.value}
                 variant="outline"
-                className="w-full justify-start h-auto py-3 px-4 hover:border-primary hover:bg-primary/5"
+                className="w-full justify-start h-auto py-2 px-3 hover:border-primary hover:bg-primary/5"
                 onClick={() => handleProfileSelect(profile.value)}
               >
                 <div className="text-left">
-                  <p className="font-medium">{profile.label}</p>
-                  <p className="text-xs text-muted-foreground">{profile.description}</p>
+                  <p className="font-medium text-sm">{profile.label}</p>
+                  <p className="text-[10px] text-muted-foreground">{profile.description}</p>
                 </div>
               </Button>
             ))}
@@ -68,32 +63,29 @@ export const ArrasAssistantOnboarding = ({ onComplete }: Props) => {
       )}
 
       {step === 2 && (
-        <Card className="flex-1 border-2 border-primary/20">
-          <CardHeader>
+        <Card className="border border-primary/20">
+          <CardHeader className="py-3">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
+              <CardTitle className="text-sm flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-green-500" />
                 Nivel de detalle
               </CardTitle>
-              <Badge variant="secondary">
+              <Badge variant="secondary" className="text-[10px]">
                 {PROFILES.find((p) => p.value === selectedProfile)?.label}
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground">
-              ¿Qué tan técnicas quieres las respuestas?
-            </p>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-2 py-2">
             {DEPTHS.map((depth) => (
               <Button
                 key={depth.value}
                 variant={selectedDepth === depth.value ? "default" : "outline"}
-                className="w-full justify-start h-auto py-3 px-4"
+                className="w-full justify-start h-auto py-2 px-3"
                 onClick={() => setSelectedDepth(depth.value)}
               >
                 <div className="text-left">
-                  <p className="font-medium">{depth.label}</p>
-                  <p className={`text-xs ${selectedDepth === depth.value ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
+                  <p className="font-medium text-sm">{depth.label}</p>
+                  <p className={`text-[10px] ${selectedDepth === depth.value ? "text-primary-foreground/80" : "text-muted-foreground"}`}>
                     {depth.description}
                   </p>
                 </div>
@@ -101,8 +93,8 @@ export const ArrasAssistantOnboarding = ({ onComplete }: Props) => {
             ))}
 
             <Button
-              className="w-full mt-6"
-              size="lg"
+              className="w-full mt-4"
+              size="sm"
               onClick={handleComplete}
             >
               Comenzar Chat
@@ -110,6 +102,7 @@ export const ArrasAssistantOnboarding = ({ onComplete }: Props) => {
 
             <Button
               variant="ghost"
+              size="sm"
               className="w-full"
               onClick={() => setStep(1)}
             >

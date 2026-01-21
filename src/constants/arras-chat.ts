@@ -1,16 +1,16 @@
 import { ProfileConfig, DepthConfig } from "@/types/chat-assistant";
 
-export const WELCOME_MESSAGE = `¡Bienvenido al **Asistente Legal de Arras**! 🏠⚖️
+export const WELCOME_MESSAGE = `¡Bienvenido al **Asistente de Soporte** del Canal de Arras! 🏠
 
-Soy tu experto en contratos de arras y compraventa inmobiliaria. Puedo ayudarte con:
+Estoy aquí para ayudarte con:
 
-- **Tipos de arras**: Penitenciales, confirmatorias y penales
-- **Consecuencias legales**: Qué pasa si comprador o vendedor desiste
-- **Documentación**: Qué documentos necesitas para el expediente
-- **Proceso de firma**: Cómo funciona la firma electrónica eIDAS
-- **Uso del sistema**: Cómo utilizar GDigital para tu operación
+- **Uso de la plataforma**: Cómo navegar y usar GDigital
+- **Dudas sobre arras**: Tipos, consecuencias y proceso
+- **Documentación**: Qué documentos necesitas subir
+- **Proceso de firma**: Cómo funciona la firma electrónica
+- **Resolución de problemas**: Incidencias técnicas
 
-¿En qué puedo ayudarte hoy?`;
+¿En qué puedo ayudarte?`;
 
 export const PROFILES: ProfileConfig[] = [
   {
@@ -54,17 +54,17 @@ export const DEPTHS: DepthConfig[] = [
   {
     value: "expert",
     label: "Experto",
-    description: "Máximo detalle técnico y legal",
+    description: "Máximo detalle técnico",
   },
 ];
 
 export const SUGGESTED_QUESTIONS: string[] = [
+  "¿Cómo creo un nuevo expediente de arras?",
+  "¿Qué documentos necesito subir?",
+  "¿Cómo funciona la firma electrónica?",
   "¿Qué son las arras penitenciales?",
-  "¿Qué pasa si el comprador no puede conseguir la hipoteca?",
-  "¿Cuánto se suele dar de arras?",
-  "¿Qué documentos necesito para vender mi piso?",
-  "¿Cómo funciona la firma electrónica en GDigital?",
-  "¿Puedo recuperar las arras si el vendedor incumple?",
+  "¿Cómo contacto con la notaría?",
+  "¿Cómo exporto el expediente?",
 ];
 
 export const STORAGE_KEYS = {

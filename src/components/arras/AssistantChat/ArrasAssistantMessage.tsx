@@ -1,7 +1,6 @@
 import { ChatMessage } from "@/types/chat-assistant";
 import { Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import eidasIcon from "@/assets/eidas-icon.png";
 
 interface Props {
   message: ChatMessage;
@@ -13,37 +12,36 @@ export const ArrasAssistantMessage = ({ message }: Props) => {
   return (
     <div
       className={cn(
-        "flex gap-3 mb-4",
+        "flex gap-2 mb-3",
         isUser ? "flex-row-reverse" : "flex-row"
       )}
     >
       <div
         className={cn(
-          "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
+          "flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center",
           isUser ? "bg-primary text-primary-foreground" : "bg-accent/20"
         )}
       >
         {isUser ? (
-          <User className="h-4 w-4" />
+          <User className="h-3.5 w-3.5" />
         ) : (
-          <img src={eidasIcon} alt="Asistente" className="h-5 w-5" />
+          <Bot className="h-3.5 w-3.5 text-accent" />
         )}
       </div>
 
       <div
         className={cn(
-          "max-w-[85%] rounded-2xl px-4 py-3",
+          "max-w-[85%] rounded-2xl px-3 py-2",
           isUser
             ? "bg-primary text-primary-foreground rounded-br-md"
             : "bg-muted rounded-bl-md"
         )}
       >
-        <div className="text-sm prose prose-sm dark:prose-invert max-w-none">
+        <div className="text-sm leading-relaxed">
           {message.content.split("\n").map((line, i) => {
-            // Handle markdown-style bold
             const parts = line.split(/(\*\*[^*]+\*\*)/g);
             return (
-              <p key={i} className={i > 0 ? "mt-2" : ""}>
+              <p key={i} className={i > 0 ? "mt-1.5" : ""}>
                 {parts.map((part, j) => {
                   if (part.startsWith("**") && part.endsWith("**")) {
                     return (
@@ -52,7 +50,6 @@ export const ArrasAssistantMessage = ({ message }: Props) => {
                       </strong>
                     );
                   }
-                  // Handle bullet points
                   if (part.startsWith("- ")) {
                     return <span key={j}>• {part.slice(2)}</span>;
                   }
@@ -63,7 +60,7 @@ export const ArrasAssistantMessage = ({ message }: Props) => {
           })}
         </div>
         <p className={cn(
-          "text-[10px] mt-2",
+          "text-[9px] mt-1",
           isUser ? "text-primary-foreground/60" : "text-muted-foreground"
         )}>
           {message.timestamp.toLocaleTimeString("es-ES", {

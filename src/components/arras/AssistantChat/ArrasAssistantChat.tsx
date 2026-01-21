@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, Settings, Trash2, RotateCcw, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -18,12 +17,11 @@ import { ArrasAssistantOnboarding } from "./ArrasAssistantOnboarding";
 import { ArrasAssistantMessage } from "./ArrasAssistantMessage";
 import { ArrasAssistantButton } from "./ArrasAssistantButton";
 import { SUGGESTED_QUESTIONS, PROFILES, DEPTHS } from "@/constants/arras-chat";
-import eidasIcon from "@/assets/eidas-icon.png";
 
 export const ArrasAssistantChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const {
     messages,
@@ -31,15 +29,14 @@ export const ArrasAssistantChat = () => {
     settings,
     onboardingCompleted,
     sendMessage,
-    updateSettings,
     completeOnboarding,
     clearMessages,
     resetOnboarding,
   } = useArrasAssistant();
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
@@ -74,19 +71,21 @@ export const ArrasAssistantChat = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed bottom-24 right-6 z-50 w-[400px] h-[600px] bg-background border-2 border-primary/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-24 right-6 z-50 w-[400px] h-[550px] bg-background border-2 border-primary/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-primary to-accent p-4 text-white flex items-center justify-between">
+            <div className="bg-gradient-to-r from-primary to-accent p-4 text-white flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-3">
-                <img src={eidasIcon} alt="eIDAS" className="h-8 w-8" />
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                  <Sparkles className="h-5 w-5" />
+                </div>
                 <div>
-                  <h3 className="font-bold">Asistente Legal de Arras</h3>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="text-[10px] bg-white/20 text-white">
+                  <h3 className="font-bold text-sm">Asistente de Soporte</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Badge variant="secondary" className="text-[10px] bg-white/20 text-white border-0">
                       {currentProfile?.label || "General"}
                     </Badge>
-                    <Badge variant="secondary" className="text-[10px] bg-white/20 text-white">
+                    <Badge variant="secondary" className="text-[10px] bg-white/20 text-white border-0">
                       {currentDepth?.label || "Intermedio"}
                     </Badge>
                   </div>
@@ -116,17 +115,20 @@ export const ArrasAssistantChat = () => {
 
             {/* Content */}
             {!onboardingCompleted ? (
-              <ArrasAssistantOnboarding onComplete={completeOnboarding} />
+              <div className="flex-1 overflow-y-auto">
+                <ArrasAssistantOnboarding onComplete={completeOnboarding} />
+              </div>
             ) : (
               <>
-                <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-                  <div>
+                {/* Messages container with proper scroll */}
+                <div className="flex-1 overflow-y-auto p-4">
+                  <div className="space-y-1">
                     {messages.map((msg) => (
                       <ArrasAssistantMessage key={msg.id} message={msg} />
                     ))}
 
                     {isLoading && (
-                      <div className="flex items-center gap-2 text-muted-foreground mb-4">
+                      <div className="flex items-center gap-2 text-muted-foreground py-2">
                         <Loader2 className="h-4 w-4 animate-spin" />
                         <span className="text-sm">Pensando...</span>
                       </div>
@@ -153,11 +155,13 @@ export const ArrasAssistantChat = () => {
                         </div>
                       </div>
                     )}
+                    
+                    <div ref={messagesEndRef} />
                   </div>
-                </ScrollArea>
+                </div>
 
-                {/* Input */}
-                <div className="p-4 border-t bg-background">
+                {/* Input - fixed at bottom */}
+                <div className="p-4 border-t bg-background flex-shrink-0">
                   <div className="flex gap-2">
                     <Input
                       value={inputValue}
@@ -176,7 +180,7 @@ export const ArrasAssistantChat = () => {
                     </Button>
                   </div>
                   <p className="text-[10px] text-muted-foreground mt-2 text-center">
-                    Certificado por EAD Trust (eIDAS) · No sustituye asesoramiento legal profesional
+                    Plataforma GDigital · Canal de Arras Certificado
                   </p>
                 </div>
               </>
