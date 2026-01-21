@@ -1,5 +1,4 @@
 import { useArras } from "@/contexts/ArrasContext";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FirmasRatificaciones } from "./FirmasRatificaciones";
@@ -8,7 +7,6 @@ import { ComunicacionesEstructuradas } from "./ComunicacionesEstructuradas";
 import { NotariaGestion } from "./NotariaGestion";
 import { CertificadoEventos } from "./CertificadoEventos";
 import { ResolucionCierrePanel } from "./ResolucionCierrePanel";
-import { HistorialNotificaciones } from "./HistorialNotificaciones";
 import { faseLabelsArras } from "@/data/arrasBotFlow";
 
 export const ExpedienteArrasDashboard = () => {
@@ -47,7 +45,6 @@ export const ExpedienteArrasDashboard = () => {
                 {/* Left Column: Timeline & Certifications */}
                 <div className="lg:col-span-1 space-y-6">
                     <CertificadoEventos events={expediente.eventos} />
-                    <HistorialNotificaciones />
                 </div>
 
                 {/* Right Column: Workflows */}
