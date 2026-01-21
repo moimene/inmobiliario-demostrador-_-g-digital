@@ -65,15 +65,50 @@ const REGIMENES_ECONOMICOS = [
   { value: "participacion", label: "Participación" },
 ];
 
+// Datos realistas precargados
+const compradorRealista: PersonaFisica = {
+  id: "comprador-1",
+  tipo: "fisica",
+  nombre: "Elena Ruiz Fernández",
+  dni: "51234567L",
+  estadoCivil: "casado",
+  regimenEconomico: "separacion",
+  domicilio: "Calle Alcalá 234, 5º A, 28028 Madrid",
+  email: "elena.ruiz@gmail.com",
+  telefono: "+34 612 345 678",
+  porcentaje: 100,
+};
+
+const vendedorRealista: PersonaFisica = {
+  id: "vendedor-1",
+  tipo: "fisica",
+  nombre: "Antonio García Martínez",
+  dni: "12345678Z",
+  estadoCivil: "casado",
+  regimenEconomico: "gananciales",
+  domicilio: "Calle Serrano 142, 3º B, 28006 Madrid",
+  email: "antonio.garcia@outlook.es",
+  telefono: "+34 678 901 234",
+  porcentaje: 100,
+};
+
+const tercerosRealistas = [
+  {
+    nombre: "Inmobiliaria Serrano Premium S.L.",
+    rol: "Agente Inmobiliario",
+    email: "operaciones@serranopremium.es",
+  },
+];
+
 export const Step3Partes = ({ onNext, onBack, data }: StepProps) => {
   const [compradores, setCompradores] = useState<Persona[]>(
-    data.compradores || [createPersonaFisica("comprador")]
+    data.compradores || [compradorRealista]
   );
   const [vendedores, setVendedores] = useState<Persona[]>(
-    data.vendedores || [createPersonaFisica("vendedor")]
+    data.vendedores || [vendedorRealista]
   );
   const [terceros, setTerceros] = useState<{ nombre: string; rol: string; email: string }[]>(
-    data.terceros || []
+    data.terceros || tercerosRealistas
   );
 
   function createPersonaFisica(prefix: string): PersonaFisica {
