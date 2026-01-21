@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, Calendar, Send, FileText, Users, Bell } from "lucide-react";
+import { Building2, Send, FileText } from "lucide-react";
 import { toast } from "sonner";
+import eidasIcon from "@/assets/eidas-icon.png";
 
 export const AccionesRapidasPanel = () => {
   const handleConvocarNotaria = () => {
@@ -25,10 +26,12 @@ export const AccionesRapidasPanel = () => {
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-bold flex items-center gap-2">
-          <Bell className="h-4 w-4 text-primary" />
-          Acciones Rápidas
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm font-bold flex items-center gap-2">
+            Acciones Rápidas
+          </CardTitle>
+          <img src={eidasIcon} alt="eIDAS" className="h-10 w-auto" />
+        </div>
       </CardHeader>
       <CardContent className="space-y-2">
         <Button
