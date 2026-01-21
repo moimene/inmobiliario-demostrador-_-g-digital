@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { STORAGE_KEYS, WELCOME_MESSAGE } from "@/constants/arras-chat";
 import type { ChatMessage, ChatSettings, UserProfile, DepthLevel } from "@/types/chat-assistant";
 
@@ -8,12 +7,15 @@ const DEFAULT_SETTINGS: ChatSettings = {
   depth: "intermediate",
 };
 
+const THREAD_STORAGE_KEY = "arras-chat-thread-id";
+
 export function useArrasAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [settings, setSettings] = useState<ChatSettings>(DEFAULT_SETTINGS);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [threadId, setThreadId] = useState<string | null>(null);
 
   // Load initial state from localStorage
   useEffect(() => {
@@ -39,6 +41,11 @@ export function useArrasAssistant() {
       } catch (e) {
         console.error("Error parsing messages:", e);
       }
+    }
+
+    const savedThreadId = localStorage.getItem(THREAD_STORAGE_KEY);
+    if (savedThreadId) {
+      setThreadId(savedThreadId);
     }
 
     const onboarding = localStorage.getItem(STORAGE_KEYS.onboardingCompleted);
@@ -107,6 +114,7 @@ export function useArrasAssistant() {
           },
           body: JSON.stringify({
             messages: messagesToSend,
+            threadId: threadId,
             userProfile: settings.userProfile,
             depth: settings.depth,
           }),
@@ -154,6 +162,13 @@ export function useArrasAssistant() {
 
             try {
               const parsed = JSON.parse(jsonStr);
+              
+              // Capture thread ID if provided
+              if (parsed.threadId && !threadId) {
+                setThreadId(parsed.threadId);
+                localStorage.setItem(THREAD_STORAGE_KEY, parsed.threadId);
+              }
+              
               const content = parsed.choices?.[0]?.delta?.content as string | undefined;
               if (content) {
                 assistantSoFar += content;
@@ -215,16 +230,20 @@ export function useArrasAssistant() {
 
   const clearMessages = useCallback(() => {
     setMessages([]);
+    setThreadId(null);
     localStorage.removeItem(STORAGE_KEYS.messages);
+    localStorage.removeItem(THREAD_STORAGE_KEY);
   }, []);
 
   const resetOnboarding = useCallback(() => {
     setOnboardingCompleted(false);
     setMessages([]);
+    setThreadId(null);
     setSettings(DEFAULT_SETTINGS);
     localStorage.removeItem(STORAGE_KEYS.onboardingCompleted);
     localStorage.removeItem(STORAGE_KEYS.messages);
     localStorage.removeItem(STORAGE_KEYS.settings);
+    localStorage.removeItem(THREAD_STORAGE_KEY);
   }, []);
 
   return {
