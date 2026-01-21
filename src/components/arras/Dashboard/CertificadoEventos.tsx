@@ -7,12 +7,14 @@ interface Props {
 export const CertificadoEventos = ({
   events
 }: Props) => {
-  return <Card className="bg-muted/10 border-l-4 border-l-accent">
-            <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-bold flex items-center gap-2 text-accent">Eventos Certificados<Activity className="h-4 w-4" />
-                    Auditoría en Tiempo Real
-                </CardTitle>
-            </CardHeader>
+  return (
+    <Card className="bg-muted/10 border-l-4 border-l-accent">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-bold flex items-center gap-2 text-accent">
+          <Activity className="h-4 w-4" />
+          Eventos Certificados — Auditoría en Tiempo Real
+        </CardTitle>
+      </CardHeader>
             <CardContent>
                 <div className="space-y-4">
                     {events.length === 0 ? <p className="text-xs text-muted-foreground">
@@ -33,7 +35,8 @@ export const CertificadoEventos = ({
                             Certificado por EAD Trust (QTSP)
                         </span>
                     </div>
-                </div>
-            </CardContent>
-        </Card>;
+        </div>
+      </CardContent>
+    </Card>
+  );
 };
