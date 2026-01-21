@@ -1,7 +1,6 @@
 import { MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import eidasIcon from "@/assets/eidas-icon.png";
 
 interface ArrasAssistantButtonProps {
   isOpen: boolean;
@@ -19,7 +18,7 @@ export const ArrasAssistantButton = ({ isOpen, onClick }: ArrasAssistantButtonPr
       <Button
         onClick={onClick}
         size="lg"
-        className={`h-16 w-16 rounded-full shadow-2xl transition-all duration-300 ${
+        className={`h-14 w-14 rounded-full shadow-2xl transition-all duration-300 ${
           isOpen
             ? "bg-destructive hover:bg-destructive/90"
             : "bg-gradient-to-br from-primary to-accent hover:shadow-primary/40"
@@ -34,7 +33,7 @@ export const ArrasAssistantButton = ({ isOpen, onClick }: ArrasAssistantButtonPr
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <X className="h-7 w-7" />
+              <X className="h-6 w-6" />
             </motion.div>
           ) : (
             <motion.div
@@ -43,14 +42,8 @@ export const ArrasAssistantButton = ({ isOpen, onClick }: ArrasAssistantButtonPr
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="relative"
             >
-              <MessageCircle className="h-7 w-7" />
-              <img
-                src={eidasIcon}
-                alt="eIDAS"
-                className="absolute -top-2 -right-2 h-5 w-5"
-              />
+              <MessageCircle className="h-6 w-6" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -60,10 +53,9 @@ export const ArrasAssistantButton = ({ isOpen, onClick }: ArrasAssistantButtonPr
         <motion.div
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
-          className="absolute right-20 top-1/2 -translate-y-1/2 bg-background border rounded-lg px-3 py-2 shadow-lg whitespace-nowrap"
+          className="absolute right-16 top-1/2 -translate-y-1/2 bg-background border rounded-lg px-3 py-1.5 shadow-lg whitespace-nowrap"
         >
-          <p className="text-sm font-medium">Asistente Legal de Arras</p>
-          <p className="text-xs text-muted-foreground">Experto en contratos</p>
+          <p className="text-sm font-medium">Asistente de Soporte</p>
         </motion.div>
       )}
     </motion.div>
