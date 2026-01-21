@@ -5,57 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SYSTEM_PROMPT = `Eres un **Asistente Legal Especializado en Contratos de Arras** dentro de la plataforma GDigital, un sistema de contratación digital certificado con validez legal bajo el Reglamento eIDAS.
-
-## Tu Rol
-Eres un experto en derecho inmobiliario español, especializado en:
-- **Contratos de Arras** (penitenciales, confirmatorias, penales)
-- **Código Civil Español** (Arts. 1454, 1124, 1152-1155)
-- **Reglamento eIDAS** y firma electrónica cualificada
-- **Ley 6/2020** de regulación de servicios de confianza
-- **Proceso de compraventa inmobiliaria** en España
-
-## Conocimiento del Sistema
-Asistes a usuarios en la plataforma GDigital que gestiona expedientes de arras con:
-- **Certificación eIDAS**: Todas las comunicaciones tienen sellado de tiempo cualificado
-- **EAD Trust (QTSP)**: Proveedor de servicios de confianza cualificado
-- **Canal de Arras**: Chat certificado entre comprador y vendedor
-- **Wizard de Arras**: Formulario guiado de 6 pasos para crear expedientes
-- **Dashboard**: Panel de gestión con firmas, documentos y comunicaciones
-- **Modo Observatorio**: Estándar ICADE-Garrigues para arras penitenciales
-
-## Fases del Expediente de Arras
-1. **Apertura**: Inicio del expediente y verificación de partes
-2. **Identificación**: Verificación de identidad de comprador y vendedor
-3. **Documentación**: Recopilación de Nota Simple, IBI, Certificado Energético, etc.
-4. **Negociación**: Configuración de condiciones económicas y plazos
-5. **Firma Arras**: Firma electrónica cualificada del contrato de arras
-6. **Depósito**: Constitución del depósito de arras
-7. **Pre-Escritura**: Gestión notarial y documentación final
-8. **Cierre**: Elevación a escritura pública o resolución
-
-## Tipos de Arras
-- **Penitenciales (Art. 1454 CC)**: Permiten desistimiento perdiendo/devolviendo doble
-- **Confirmatorias**: Señal a cuenta del precio, sin facultad de desistimiento
-- **Penales**: Indemnización predeterminada por incumplimiento
-
-## Consecuencias Legales
-- Si el **COMPRADOR desiste** (arras penitenciales): pierde la cantidad entregada
-- Si el **VENDEDOR desiste** (arras penitenciales): devuelve el doble de lo recibido
-- **Modo Observatorio**: Obliga a arras penitenciales sin cláusulas hipotecarias
-
-## Instrucciones de Respuesta
-1. **Sé preciso y legal**: Cita artículos del Código Civil cuando sea relevante
-2. **Contextualiza en GDigital**: Relaciona tus respuestas con las funcionalidades del sistema
-3. **Sé práctico**: Ofrece pasos concretos que el usuario puede seguir
-4. **Advierte riesgos**: Menciona consecuencias legales de las decisiones
-5. **Mantén formalidad profesional**: Eres un asesor legal, no un chatbot casual
-6. **Responde en español**: Todo el contenido debe ser en español de España
-
-## Limitaciones
-- No puedes dar asesoramiento fiscal específico (recomienda consultar asesor fiscal)
-- No sustituyes a un abogado para casos complejos
-- No tienes acceso a datos personales del expediente real del usuario`;
+const ASSISTANT_ID = "asst_NghzrYSl2JU0dBntmxZ7oyxZ";
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -63,82 +13,220 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, userProfile, depth } = await req.json();
+    const { messages, threadId, userProfile, depth } = await req.json();
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
 
     if (!OPENAI_API_KEY) {
       throw new Error("OPENAI_API_KEY is not configured");
     }
 
-    // Adjust system prompt based on user profile
-    let profileContext = "";
-    switch (userProfile) {
-      case "comprador":
-        profileContext = "\n\nEl usuario es un COMPRADOR potencial. Enfócate en sus derechos, riesgos de perder arras, y pasos para asegurar la operación.";
-        break;
-      case "vendedor":
-        profileContext = "\n\nEl usuario es un VENDEDOR. Enfócate en sus obligaciones, consecuencias de incumplimiento, y cómo proteger la operación.";
-        break;
-      case "agente":
-        profileContext = "\n\nEl usuario es un AGENTE INMOBILIARIO. Usa terminología profesional y enfócate en la gestión eficiente del expediente.";
-        break;
-      case "abogado":
-        profileContext = "\n\nEl usuario es un ABOGADO o asesor legal. Puedes usar terminología jurídica avanzada y citar jurisprudencia cuando sea relevante.";
-        break;
+    const headers = {
+      "Authorization": `Bearer ${OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+      "OpenAI-Beta": "assistants=v2",
+    };
+
+    // Create or use existing thread
+    let currentThreadId = threadId;
+    if (!currentThreadId) {
+      const threadResponse = await fetch("https://api.openai.com/v1/threads", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({}),
+      });
+
+      if (!threadResponse.ok) {
+        const error = await threadResponse.text();
+        console.error("Thread creation error:", error);
+        throw new Error("Failed to create thread");
+      }
+
+      const thread = await threadResponse.json();
+      currentThreadId = thread.id;
     }
 
-    // Adjust depth
-    let depthContext = "";
-    switch (depth) {
-      case "basic":
-        depthContext = "\n\nNivel: BÁSICO. Usa lenguaje simple, evita jerga legal innecesaria, respuestas concisas.";
-        break;
-      case "intermediate":
-        depthContext = "\n\nNivel: INTERMEDIO. Balance entre claridad y detalle técnico.";
-        break;
-      case "expert":
-        depthContext = "\n\nNivel: EXPERTO. Incluye citas legales, jurisprudencia relevante, y análisis detallado.";
-        break;
+    // Get the last user message
+    const lastUserMessage = messages[messages.length - 1];
+    if (!lastUserMessage || lastUserMessage.role !== "user") {
+      throw new Error("No user message provided");
     }
 
-    const fullSystemPrompt = SYSTEM_PROMPT + profileContext + depthContext;
+    // Add context about user profile and depth
+    let contextPrefix = "";
+    if (userProfile && userProfile !== "general") {
+      const profileLabels: Record<string, string> = {
+        comprador: "El usuario es un COMPRADOR potencial",
+        vendedor: "El usuario es un VENDEDOR",
+        agente: "El usuario es un AGENTE INMOBILIARIO",
+        abogado: "El usuario es un ABOGADO o asesor legal",
+      };
+      contextPrefix += `[${profileLabels[userProfile] || "Usuario general"}] `;
+    }
+    if (depth === "basic") {
+      contextPrefix += "[Responder de forma simple y directa] ";
+    } else if (depth === "expert") {
+      contextPrefix += "[Responder con máximo detalle técnico y citas legales] ";
+    }
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: fullSystemPrompt },
-          ...messages,
-        ],
-        stream: true,
-        temperature: 0.7,
-        max_tokens: 1500,
-      }),
-    });
+    const messageContent = contextPrefix + lastUserMessage.content;
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("OpenAI error:", response.status, errorText);
+    // Add message to thread
+    const messageResponse = await fetch(
+      `https://api.openai.com/v1/threads/${currentThreadId}/messages`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          role: "user",
+          content: messageContent,
+        }),
+      }
+    );
+
+    if (!messageResponse.ok) {
+      const error = await messageResponse.text();
+      console.error("Message creation error:", error);
+      throw new Error("Failed to add message");
+    }
+
+    // Run the assistant with streaming
+    const runResponse = await fetch(
+      `https://api.openai.com/v1/threads/${currentThreadId}/runs`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          assistant_id: ASSISTANT_ID,
+          stream: true,
+        }),
+      }
+    );
+
+    if (!runResponse.ok) {
+      const error = await runResponse.text();
+      console.error("Run creation error:", error);
       
-      if (response.status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again later." }), {
+      if (runResponse.status === 429) {
+        return new Response(JSON.stringify({ error: "Rate limit exceeded" }), {
           status: 429,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       
-      return new Response(JSON.stringify({ error: "AI service error" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      throw new Error("Failed to run assistant");
     }
 
-    return new Response(response.body, {
+    // Transform the SSE stream to extract text deltas
+    const reader = runResponse.body?.getReader();
+    const encoder = new TextEncoder();
+    
+    const stream = new ReadableStream({
+      async start(controller) {
+        if (!reader) {
+          controller.close();
+          return;
+        }
+
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              const data = line.slice(6).trim();
+              if (data === "[DONE]") continue;
+
+              try {
+                const parsed = JSON.parse(data);
+                
+                // Handle thread.run events
+                if (parsed.object === "thread.run") {
+                  // Send thread ID in first message
+                  if (parsed.status === "queued" || parsed.status === "in_progress") {
+                    controller.enqueue(
+                      encoder.encode(`data: ${JSON.stringify({ threadId: currentThreadId })}\n\n`)
+                    );
+                  }
+                }
+
+                // Handle message delta events (the actual text)
+                if (parsed.object === "thread.message.delta") {
+                  const delta = parsed.delta;
+                  if (delta?.content?.[0]?.text?.value) {
+                    const text = delta.content[0].text.value;
+                    controller.enqueue(
+                      encoder.encode(`data: ${JSON.stringify({ 
+                        choices: [{ delta: { content: text } }] 
+                      })}\n\n`)
+                    );
+                  }
+                }
+
+                // Handle completion
+                if (parsed.object === "thread.run" && parsed.status === "completed") {
+                  controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+                }
+
+                // Handle errors
+                if (parsed.object === "thread.run" && parsed.status === "failed") {
+                  console.error("Run failed:", parsed.last_error);
+                  controller.enqueue(
+                    encoder.encode(`data: ${JSON.stringify({ 
+                      choices: [{ delta: { content: "Lo siento, hubo un error procesando tu consulta." } }] 
+                    })}\n\n`)
+                  );
+                  controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+                }
+              } catch {
+                // Ignore parse errors for non-JSON lines
+              }
+            }
+          }
+
+          // Final flush
+          if (buffer.trim()) {
+            const lines = buffer.split("\n");
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              const data = line.slice(6).trim();
+              if (data === "[DONE]") continue;
+              
+              try {
+                const parsed = JSON.parse(data);
+                if (parsed.object === "thread.message.delta") {
+                  const delta = parsed.delta;
+                  if (delta?.content?.[0]?.text?.value) {
+                    controller.enqueue(
+                      encoder.encode(`data: ${JSON.stringify({ 
+                        choices: [{ delta: { content: delta.content[0].text.value } }] 
+                      })}\n\n`)
+                    );
+                  }
+                }
+              } catch {
+                // Ignore
+              }
+            }
+          }
+
+          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+        } catch (e) {
+          console.error("Stream error:", e);
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (e) {
