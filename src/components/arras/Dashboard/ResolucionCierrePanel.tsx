@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { generarCertificadoQTSP } from "@/utils/generarCertificadoQTSP";
+import eidasIcon from "@/assets/eidas-icon.png";
 
 type TipoCierre = 'mutuo_acuerdo' | 'litigio' | null;
 
@@ -123,13 +124,18 @@ export const ResolucionCierrePanel = () => {
       {/* Header */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Scale className="h-5 w-5 text-primary" />
-            Panel de Resolución y Cierre
-          </CardTitle>
-          <CardDescription>
-            Gestione la finalización del contrato fuera del cauce ordinario (escritura pública notarial)
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Scale className="h-5 w-5 text-primary" />
+                Panel de Resolución y Cierre
+              </CardTitle>
+              <CardDescription>
+                Gestione la finalización del contrato fuera del cauce ordinario (escritura pública notarial)
+              </CardDescription>
+            </div>
+            <img src={eidasIcon} alt="eIDAS Certified" className="h-12 w-auto" />
+          </div>
         </CardHeader>
       </Card>
 

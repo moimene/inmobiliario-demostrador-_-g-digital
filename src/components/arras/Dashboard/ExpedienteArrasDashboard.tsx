@@ -8,6 +8,7 @@ import { NotariaGestion } from "./NotariaGestion";
 import { CertificadoEventos } from "./CertificadoEventos";
 import { ResolucionCierrePanel } from "./ResolucionCierrePanel";
 import { faseLabelsArras } from "@/data/arrasBotFlow";
+import eidasIcon from "@/assets/eidas-icon.png";
 
 export const ExpedienteArrasDashboard = () => {
     const { expediente, usuarioActual } = useArras();
@@ -15,7 +16,7 @@ export const ExpedienteArrasDashboard = () => {
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-7xl animate-fade-in">
-            {/* Header del Expediente */}
+            {/* Header del Expediente con Logo eIDAS destacado */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
                     <div className="flex items-center gap-2 mb-1">
@@ -30,7 +31,13 @@ export const ExpedienteArrasDashboard = () => {
                     </p>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-6">
+                    {/* Logo eIDAS destacado */}
+                    <div className="flex flex-col items-center">
+                        <img src={eidasIcon} alt="eIDAS Certified" className="h-14 w-auto" />
+                        <span className="text-[10px] text-muted-foreground font-medium mt-1">Certificado UE</span>
+                    </div>
+                    
                     {/* Actions related to current user */}
                     <div className="text-right">
                         <p className="text-xs text-muted-foreground">Vista actual</p>

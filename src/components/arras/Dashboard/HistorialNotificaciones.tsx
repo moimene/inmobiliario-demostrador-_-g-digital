@@ -12,6 +12,7 @@ import {
   AlertCircle,
   PartyPopper
 } from "lucide-react";
+import eidasIcon from "@/assets/eidas-icon.png";
 
 export interface Notificacion {
   id: string;
@@ -129,11 +130,12 @@ export const HistorialNotificaciones = ({ notificaciones = notificacionesMock }:
             <Mail className="h-5 w-5 text-primary" />
             Historial de Notificaciones
           </CardTitle>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span>{totalEnviadas} enviadas</span>
-            <Separator orientation="vertical" className="h-4" />
-            <span className="text-green-600">{totalLeidas} leídas</span>
-          </div>
+          <img src={eidasIcon} alt="eIDAS" className="h-10 w-auto" />
+        </div>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-2">
+          <span>{totalEnviadas} enviadas</span>
+          <Separator orientation="vertical" className="h-4" />
+          <span className="text-green-600">{totalLeidas} leídas</span>
         </div>
       </CardHeader>
       <CardContent>
