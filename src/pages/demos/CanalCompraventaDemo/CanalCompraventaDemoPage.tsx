@@ -5,7 +5,7 @@ import { ChatMovil } from "@/components/compraventa/ChatMovil/ChatMovil";
 import { DualMobileView } from "@/components/compraventa/DualMobileView";
 import { ConsolaDesktop } from "@/components/compraventa/ConsolaDesktop/ConsolaDesktop";
 import { Button } from "@/components/ui/button";
-import diagramaCompraventa from "@/assets/diagrama-canal-compraventa.png";
+import infografiaCompraventa from "@/assets/infografia-canal-compraventa.jpeg";
 
 export const CanalCompraventaDemoPage = () => {
   const { vistaActual, usuarioActual, cambiarUsuario } = useCompraventa();
@@ -14,7 +14,7 @@ export const CanalCompraventaDemoPage = () => {
     <DemoLayout
       title="Canal de Compraventa Directa Certificado"
       description="Soporte al Comprador y Vendedor en la gestión de su relación jurídica durante todo el proceso de compraventa directa, desde identificación hasta entrega de llaves, con dos modalidades de cierre: escritura pública única o documento privado con elevación posterior."
-      infographic={diagramaCompraventa}
+      infographic={infografiaCompraventa}
     >
       <div className="space-y-6">
         <ViewSelectorCompraventa />
