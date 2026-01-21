@@ -11,6 +11,7 @@ import infografiaCLM from "@/assets/infografia-clm-gdigital.jpeg";
 import infografiaArrendamiento from "@/assets/infografia-canal-arrendamiento.jpeg";
 import infografiaArras from "@/assets/infografia-canal-arras.jpeg";
 import infografiaEstandarKtech from "@/assets/infografia-estandar-ktech-arras.jpeg";
+import infografiaArrasComputable from "@/assets/infografia-arras-computable.jpeg";
 const Conceptos = () => {
   const navigate = useNavigate();
   return <div className="min-h-screen bg-background">
@@ -276,6 +277,86 @@ const Conceptos = () => {
         <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <img src={infografiaEstandarKtech} alt="Modelo de Arras del Foro K-TECH - Observatorio Legaltech Garrigues-ICADE" className="w-full h-auto" />
         </Card>
+      </div>
+    </section>
+
+    {/* Pactos de Arras y Contratos Computables */}
+    <section className="py-16 bg-gradient-to-b from-[#1A2E4C] to-[#0F1A2A]">
+      <div className="container px-6 mx-auto max-w-7xl">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#0FE860]/10 border border-[#0FE860]/30 rounded-full mb-4">
+            <FileCode className="h-4 w-4 text-[#0FE860]" />
+            <span className="text-sm font-medium text-[#0FE860]">Visión Computable</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Pactos de Arras y <span className="text-[#0FE860]">Contratos Computables</span>
+          </h2>
+          <p className="text-lg text-white/70 max-w-4xl mx-auto leading-relaxed">
+            Aterrizando la visión: cómo el contrato de arras tradicional se transforma en un 
+            <strong className="text-[#C4F53B]"> autómata digital</strong> gobernado por estados, 
+            reglas y confianza regulada. De un PDF estático a un proceso computable que "sabe" 
+            en qué estado está y reacciona automáticamente a eventos.
+          </p>
+        </div>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Card className="overflow-hidden cursor-pointer hover:shadow-[0_0_40px_rgba(15,232,96,0.2)] transition-all group border-2 border-[#0FE860]/30 hover:border-[#0FE860]/60 bg-white/5">
+              <div className="relative">
+                <img 
+                  src={infografiaArrasComputable} 
+                  alt="Aterrizando la Visión: El Contrato de Arras como Proceso Computable" 
+                  className="w-full h-auto"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#0FE860]/90 text-[#1A2E4C] px-4 py-2 rounded-lg flex items-center gap-2 font-semibold">
+                    <ZoomIn className="h-5 w-5" />
+                    <span>Clic para ampliar</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </DialogTrigger>
+          <DialogContent className="max-w-[95vw] w-full h-[90vh] p-0">
+            <div className="w-full h-full overflow-auto p-6 bg-[#1A2E4C]">
+              <img 
+                src={infografiaArrasComputable} 
+                alt="Infografía Arras Computable - Vista ampliada" 
+                className="w-full h-auto"
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Beneficios estratégicos */}
+        <div className="mt-10 grid md:grid-cols-4 gap-6">
+          <div className="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+            <div className="text-[#0FE860] text-2xl mb-2">📋</div>
+            <h4 className="font-semibold text-white mb-1">Menos Ambigüedad</h4>
+            <p className="text-sm text-white/60">Visión única de estado y reglas</p>
+          </div>
+          <div className="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+            <div className="text-[#C4F53B] text-2xl mb-2">✓</div>
+            <h4 className="font-semibold text-white mb-1">Prueba por Defecto</h4>
+            <p className="text-sm text-white/60">Evidencias automáticas</p>
+          </div>
+          <div className="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+            <div className="text-[#0FE860] text-2xl mb-2">💳</div>
+            <h4 className="font-semibold text-white mb-1">Integración Contrato-Pago</h4>
+            <p className="text-sm text-white/60">Movimiento de fondos nativo</p>
+          </div>
+          <div className="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+            <div className="text-[#C4F53B] text-2xl mb-2">🚀</div>
+            <h4 className="font-semibold text-white mb-1">Escalabilidad Industrial</h4>
+            <p className="text-sm text-white/60">Arquitectura API y servicios regulados</p>
+          </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-sm text-white/50 italic">
+            La arquitectura computable permite que el contrato reaccione automáticamente a eventos (pagos, tiempos, acciones) generando evidencia certificada
+          </p>
+        </div>
       </div>
     </section>
 
