@@ -56,14 +56,24 @@ interface StepProps {
   data: Partial<Step2Data>;
 }
 
+// Fecha límite escritura: 90 días desde hoy
+const getFechaLimiteEscritura = () => {
+  const fecha = new Date();
+  fecha.setDate(fecha.getDate() + 90);
+  return fecha.toISOString().split("T")[0];
+};
+
 export const Step2Acuerdo = ({ onNext, onBack, data }: StepProps) => {
   const [formData, setFormData] = useState<Partial<Step2Data>>({
     modoEstandar: true,
     tipoArras: "PENITENCIALES",
-    precioVenta: 0,
-    importeArras: 0,
+    // Datos económicos realistas
+    precioVenta: 485000,
+    importeArras: 48500,
     formaPagoArras: "al_firmar",
-    fechaLimiteEscritura: "",
+    fechaLimiteEscritura: getFechaLimiteEscritura(),
+    notariaNombre: "D. Carlos Martínez Aguado",
+    notariaDireccion: "Calle Velázquez 89, 1º, 28006 Madrid",
     distribucionGastos: "segun_ley",
     resolucionConflictos: "juzgados",
     firmaPreferida: "electronica",
@@ -72,11 +82,12 @@ export const Step2Acuerdo = ({ onNext, onBack, data }: StepProps) => {
     mobiliarioIncluido: false,
     retencionPlusvalia: false,
     retencionIbi: false,
-    cosaCierta: false,
-    libreOcupantes: false,
-    libreCargas: false,
-    corrientePagos: false,
-    certificadoEnergetico: false,
+    // Manifestaciones del vendedor
+    cosaCierta: true,
+    libreOcupantes: true,
+    libreCargas: true,
+    corrientePagos: true,
+    certificadoEnergetico: true,
     ...data,
   });
 

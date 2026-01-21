@@ -56,32 +56,48 @@ const PROVINCIAS_FORALES = ["Álava", "Vizcaya", "Guipúzcoa", "Navarra"];
 
 export const Step1Inmueble = ({ onNext, data }: StepProps) => {
   const [formData, setFormData] = useState<Partial<Step1Data>>({
-    direccion: "",
-    codigoPostal: "",
-    ciudad: "",
-    provincia: "",
-    referenciaCatastral: "",
+    // Datos realistas de una vivienda en Madrid
+    direccion: "Calle Serrano 142, 3º B",
+    codigoPostal: "28006",
+    ciudad: "Madrid",
+    provincia: "Madrid",
+    referenciaCatastral: "9872023VK4797S0001WX",
     usoCatastral: "vivienda",
-    superficieCatastral: 0,
-    anoConstruccion: 0,
-    numeroRegistro: "",
-    localidadRegistro: "",
-    numeroFinca: "",
-    cruIdufir: "",
-    tomo: "",
-    libro: "",
-    folio: "",
-    m2Construidos: 0,
-    m2Utiles: 0,
-    habitaciones: 0,
-    banos: 0,
-    tieneAscensor: false,
-    descripcion: "",
+    superficieCatastral: 145,
+    anoConstruccion: 1985,
+    numeroRegistro: "28",
+    localidadRegistro: "Madrid",
+    numeroFinca: "15847",
+    cruIdufir: "28040000158470",
+    tomo: "2543",
+    libro: "1876",
+    folio: "124",
+    m2Construidos: 145,
+    m2Utiles: 128,
+    habitaciones: 4,
+    banos: 2,
+    tieneAscensor: true,
+    descripcion: "Luminoso piso exterior con orientación sur, reformado en 2019. Suelos de parquet, calefacción central y aire acondicionado por conductos. Armarios empotrados en todos los dormitorios.",
     anexos: [],
     ...data,
   });
 
-  const [anexos, setAnexos] = useState<Anexo[]>(data.anexos || []);
+  const [anexos, setAnexos] = useState<Anexo[]>(data.anexos || [
+    {
+      id: "anexo-garaje-1",
+      tipo: "garaje",
+      ubicacion: "Sótano -1, Plaza 23",
+      superficie: 12,
+      vinculacion: "ob_rem",
+    },
+    {
+      id: "anexo-trastero-1",
+      tipo: "trastero",
+      ubicacion: "Sótano -2, Trastero 15",
+      superficie: 8,
+      vinculacion: "ob_rem",
+    },
+  ]);
 
   const esTerritorioForal = PROVINCIAS_FORALES.includes(formData.provincia || "");
 
