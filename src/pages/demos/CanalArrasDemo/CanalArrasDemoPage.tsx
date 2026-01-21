@@ -2,6 +2,7 @@ import { DemoLayout } from "@/components/DemoLayout";
 import { useArras } from "@/contexts/ArrasContext";
 import { ExpedienteArrasDashboard } from "@/components/arras/Dashboard/ExpedienteArrasDashboard";
 import { ArrasWizard } from "@/components/arras/Wizard/ArrasWizard";
+import { ArrasAssistantChat } from "@/components/arras/AssistantChat/ArrasAssistantChat";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 
@@ -47,6 +48,9 @@ export const CanalArrasDemoPage = () => {
         )}
 
       </div>
+
+      {/* Asistente AI flotante */}
+      <ArrasAssistantChat />
     </DemoLayout>
   );
 };
