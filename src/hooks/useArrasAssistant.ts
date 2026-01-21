@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { STORAGE_KEYS, WELCOME_MESSAGE } from "@/constants/arras-chat";
 import type { ChatMessage, ChatSettings, UserProfile, DepthLevel } from "@/types/chat-assistant";
 
@@ -15,22 +15,18 @@ export function useArrasAssistant() {
   const [settings, setSettings] = useState<ChatSettings>(DEFAULT_SETTINGS);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [threadId, setThreadId] = useState<string | null>(null);
+  const threadIdRef = useRef<string | null>(null);
 
   // Load initial state from localStorage
   useEffect(() => {
-    const savedSettings = localStorage.getItem(STORAGE_KEYS.settings);
-    if (savedSettings) {
-      try {
+    try {
+      const savedSettings = localStorage.getItem(STORAGE_KEYS.settings);
+      if (savedSettings) {
         setSettings(JSON.parse(savedSettings));
-      } catch (e) {
-        console.error("Error parsing settings:", e);
       }
-    }
 
-    const savedMessages = localStorage.getItem(STORAGE_KEYS.messages);
-    if (savedMessages) {
-      try {
+      const savedMessages = localStorage.getItem(STORAGE_KEYS.messages);
+      if (savedMessages) {
         const parsed = JSON.parse(savedMessages);
         setMessages(
           parsed.map((m: any) => ({
@@ -38,18 +34,18 @@ export function useArrasAssistant() {
             timestamp: new Date(m.timestamp),
           }))
         );
-      } catch (e) {
-        console.error("Error parsing messages:", e);
       }
-    }
 
-    const savedThreadId = localStorage.getItem(THREAD_STORAGE_KEY);
-    if (savedThreadId) {
-      setThreadId(savedThreadId);
-    }
+      const savedThreadId = localStorage.getItem(THREAD_STORAGE_KEY);
+      if (savedThreadId) {
+        threadIdRef.current = savedThreadId;
+      }
 
-    const onboarding = localStorage.getItem(STORAGE_KEYS.onboardingCompleted);
-    setOnboardingCompleted(onboarding === "true");
+      const onboarding = localStorage.getItem(STORAGE_KEYS.onboardingCompleted);
+      setOnboardingCompleted(onboarding === "true");
+    } catch (e) {
+      console.error("Error loading state:", e);
+    }
   }, []);
 
   // Persist messages
@@ -73,7 +69,6 @@ export function useArrasAssistant() {
     setOnboardingCompleted(true);
     localStorage.setItem(STORAGE_KEYS.onboardingCompleted, "true");
     
-    // Add welcome message
     const welcomeMsg: ChatMessage = {
       id: `assistant-welcome-${Date.now()}`,
       role: "assistant",
@@ -114,7 +109,7 @@ export function useArrasAssistant() {
           },
           body: JSON.stringify({
             messages: messagesToSend,
-            threadId: threadId,
+            threadId: threadIdRef.current,
             userProfile: settings.userProfile,
             depth: settings.depth,
           }),
@@ -133,7 +128,6 @@ export function useArrasAssistant() {
         let assistantSoFar = "";
         let streamDone = false;
 
-        // Create initial assistant message
         const assistantId = `assistant-${Date.now()}`;
         setMessages((prev) => [
           ...prev,
@@ -163,15 +157,14 @@ export function useArrasAssistant() {
             try {
               const parsed = JSON.parse(jsonStr);
               
-              // Capture thread ID if provided
-              if (parsed.threadId && !threadId) {
-                setThreadId(parsed.threadId);
+              if (parsed.threadId && !threadIdRef.current) {
+                threadIdRef.current = parsed.threadId;
                 localStorage.setItem(THREAD_STORAGE_KEY, parsed.threadId);
               }
               
-              const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-              if (content) {
-                assistantSoFar += content;
+              const deltaContent = parsed.choices?.[0]?.delta?.content as string | undefined;
+              if (deltaContent) {
+                assistantSoFar += deltaContent;
                 setMessages((prev) =>
                   prev.map((m) =>
                     m.id === assistantId ? { ...m, content: assistantSoFar } : m
@@ -196,9 +189,9 @@ export function useArrasAssistant() {
             if (jsonStr === "[DONE]") continue;
             try {
               const parsed = JSON.parse(jsonStr);
-              const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-              if (content) {
-                assistantSoFar += content;
+              const deltaContent = parsed.choices?.[0]?.delta?.content as string | undefined;
+              if (deltaContent) {
+                assistantSoFar += deltaContent;
                 setMessages((prev) =>
                   prev.map((m) =>
                     m.id === assistantId ? { ...m, content: assistantSoFar } : m
@@ -206,7 +199,7 @@ export function useArrasAssistant() {
                 );
               }
             } catch {
-              /* ignore */
+              /* ignore parse errors */
             }
           }
         }
@@ -230,7 +223,7 @@ export function useArrasAssistant() {
 
   const clearMessages = useCallback(() => {
     setMessages([]);
-    setThreadId(null);
+    threadIdRef.current = null;
     localStorage.removeItem(STORAGE_KEYS.messages);
     localStorage.removeItem(THREAD_STORAGE_KEY);
   }, []);
@@ -238,7 +231,7 @@ export function useArrasAssistant() {
   const resetOnboarding = useCallback(() => {
     setOnboardingCompleted(false);
     setMessages([]);
-    setThreadId(null);
+    threadIdRef.current = null;
     setSettings(DEFAULT_SETTINGS);
     localStorage.removeItem(STORAGE_KEYS.onboardingCompleted);
     localStorage.removeItem(STORAGE_KEYS.messages);
