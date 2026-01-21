@@ -1,1 +1,4 @@
 project_id = "gbjpybzdlcsmvoasrjvi"
+
+[functions.arras-assistant]
+verify_jwt = false
