@@ -93,13 +93,35 @@ export const Footer = () => {
             </p>
           </div>
 
-          {/* Logos de certificación */}
+          {/* Logos de certificación con enlaces */}
           <div className="flex items-center gap-4">
-            <img src={eadTrustLogo} alt="EAD Trust" className="h-8 opacity-90" />
+            <a href="https://www.eadtrust.eu" target="_blank" rel="noopener noreferrer">
+              <img src={eadTrustLogo} alt="EAD Trust" className="h-8 opacity-90 hover:opacity-100 transition-opacity" />
+            </a>
             <img src={eidasLogo} alt="eIDAS" className="h-8 opacity-90" />
           </div>
 
-          <p className="text-xs text-primary-foreground/70 mt-3">
+          {/* Enlaces web */}
+          <div className="flex flex-col gap-1 mt-3">
+            <a 
+              href="https://www.g-digital.garrigues.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            >
+              www.g-digital.garrigues.com
+            </a>
+            <a 
+              href="https://www.eadtrust.eu" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            >
+              www.eadtrust.eu
+            </a>
+          </div>
+
+          <p className="text-xs text-primary-foreground/70 mt-2">
             Infraestructura eIDAS certificada
           </p>
         </div>
